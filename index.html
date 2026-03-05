@@ -29,12 +29,13 @@
                     },
                     animation: {
                         'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out infinite 2s',
                         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
+                            '50%': { transform: 'translateY(-15px)' },
                         }
                     }
                 }
@@ -52,12 +53,21 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Glassmorphism Ultra-ligero */
-        .glass-nav {
-            background: rgba(12, 12, 14, 0.6);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        /* Glassmorphism Ultra-ligero para HUD */
+        .hud-nav {
+            background: rgba(12, 12, 14, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.05), inset 0 0 20px rgba(16, 185, 129, 0.02);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .hud-nav.scrolled {
+            background: rgba(12, 12, 14, 0.9);
+            border-color: rgba(16, 185, 129, 0.4);
+            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.1), inset 0 0 20px rgba(16, 185, 129, 0.05);
+            transform: translateY(-5px);
         }
 
         .glass-card {
@@ -93,37 +103,59 @@
             box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
         }
 
-        /* Malla de fondo optimizada */
+        /* Malla de fondo HUD (Cuadrícula Tech) */
         .hero-bg {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -1;
-            background: 
-                radial-gradient(circle at 15% 50%, rgba(16, 185, 129, 0.04), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.03), transparent 25%);
+            background-color: #050507;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                radial-gradient(circle at 15% 50%, rgba(16, 185, 129, 0.05), transparent 30%),
+                radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.03), transparent 30%);
+            background-size: 50px 50px, 50px 50px, 100% 100%, 100% 100%;
             pointer-events: none;
         }
+
+        /* Crosshairs (Miras HUD) */
+        .crosshair {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+        .crosshair::before, .crosshair::after {
+            content: '';
+            position: absolute;
+            background: #10b981;
+        }
+        .crosshair::before { top: 50%; left: 0; right: 0; height: 1px; transform: translateY(-50%); }
+        .crosshair::after { left: 50%; top: 0; bottom: 0; width: 1px; transform: translateX(-50%); }
 
         /* SPA View Transitions */
         .page-view {
             display: none;
             opacity: 0;
-            transition: opacity 0.4s ease-in-out;
+            transition: opacity 0.8s ease-in-out;
         }
         .page-view.active {
             display: block;
             opacity: 1;
         }
 
-        /* Reveal Animation */
+        /* Reveal Animation - FADE IN ELEGANTE CON BLUR */
         .reveal {
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(30px);
+            filter: blur(10px);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
+            filter: blur(0);
         }
 
         /* Optimizaciones de TikTok Container */
@@ -206,150 +238,218 @@
 
     <div class="hero-bg"></div>
 
-    <!-- Navegación Fija -->
-    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    <!-- ELEMENTOS HUD GLOBALES (Se expanden por toda la pantalla) -->
+    <div class="fixed top-6 left-6 w-16 h-16 border-t-[1.5px] border-l-[1.5px] border-brand-emerald/30 pointer-events-none z-0 rounded-tl-xl transition-all duration-1000 ease-out opacity-50"></div>
+    <div class="fixed top-6 right-6 w-16 h-16 border-t-[1.5px] border-r-[1.5px] border-brand-emerald/30 pointer-events-none z-0 rounded-tr-xl transition-all duration-1000 ease-out opacity-50"></div>
+    <div class="fixed bottom-6 left-6 w-16 h-16 border-b-[1.5px] border-l-[1.5px] border-brand-emerald/30 pointer-events-none z-0 rounded-bl-xl transition-all duration-1000 ease-out opacity-50 hidden md:block"></div>
+    <div class="fixed bottom-6 right-6 w-16 h-16 border-b-[1.5px] border-r-[1.5px] border-brand-emerald/30 pointer-events-none z-0 rounded-br-xl transition-all duration-1000 ease-out opacity-50 hidden md:block"></div>
+    
+    <div class="fixed top-1/2 left-8 -translate-y-1/2 crosshair hidden md:block"></div>
+    <div class="fixed top-1/2 right-8 -translate-y-1/2 crosshair hidden md:block"></div>
+
+    <!-- HUD DE NAVEGACIÓN FLOTANTE -->
+    <nav class="fixed top-6 left-0 right-0 z-50 px-4 transition-all duration-300 pointer-events-none" id="main-nav">
+        <div class="max-w-4xl mx-auto hud-nav rounded-full px-5 py-3 md:px-6 md:py-3.5 flex items-center justify-between pointer-events-auto relative">
             
+            <!-- Decoración HUD Nav -->
+            <div class="absolute -left-1 top-1/2 w-2 h-6 bg-brand-emerald rounded-full -translate-y-1/2 opacity-50 blur-[2px]"></div>
+            <div class="absolute -right-1 top-1/2 w-2 h-6 bg-brand-emerald rounded-full -translate-y-1/2 opacity-50 blur-[2px]"></div>
+
             <!-- Logo -->
             <button onclick="router.navigate('home')" class="flex items-center space-x-3 group outline-none">
-                <div class="brand-logo-box group-hover:scale-105 transition-transform">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div class="brand-logo-box group-hover:scale-105 transition-transform w-8 h-8">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="#050507" stroke="#050507" stroke-width="1.5" stroke-linejoin="round"/>
                     </svg>
                 </div>
-                <span class="text-xl font-black italic tracking-tight leading-none text-white">
+                <span class="text-lg md:text-xl font-black italic tracking-tight leading-none text-white">
                     Lycode<span class="text-brand-emerald">Life</span>
                 </span>
             </button>
 
             <!-- Desktop Menu -->
             <div class="hidden md:flex items-center space-x-8">
-                <button onclick="router.navigate('home')" class="nav-link text-xs font-bold uppercase tracking-widest text-zinc-400 hover:text-white transition">Inicio</button>
-                <button onclick="router.navigate('proyectos')" class="nav-link text-xs font-bold uppercase tracking-widest text-zinc-400 hover:text-white transition">Proyectos</button>
-                <a href="https://www.instagram.com/lycodelife" target="_blank" class="text-xs font-bold uppercase tracking-widest text-zinc-400 hover:text-white transition">Instagram</a>
+                <button onclick="router.navigate('home')" class="nav-link text-xs font-bold uppercase tracking-widest text-zinc-400 hover:text-white transition flex items-center space-x-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald opacity-0 nav-dot transition-opacity"></span>
+                    <span>Inicio</span>
+                </button>
+                <button onclick="router.navigate('proyectos')" class="nav-link text-xs font-bold uppercase tracking-widest text-zinc-400 hover:text-white transition flex items-center space-x-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald opacity-0 nav-dot transition-opacity"></span>
+                    <span>Proyectos</span>
+                </button>
+                <button onclick="router.navigate('nosotros')" class="nav-link text-xs font-bold uppercase tracking-widest text-zinc-400 hover:text-white transition flex items-center space-x-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald opacity-0 nav-dot transition-opacity"></span>
+                    <span>Quiénes somos</span>
+                </button>
             </div>
 
             <!-- Mobile Menu Toggle -->
-            <button id="mobile-menu-btn" class="md:hidden text-zinc-300 hover:text-white outline-none">
-                <i data-lucide="menu" class="w-6 h-6"></i>
+            <button id="mobile-menu-btn" class="md:hidden text-zinc-300 hover:text-white outline-none bg-white/5 p-2 rounded-full border border-white/10">
+                <i data-lucide="menu" class="w-5 h-5"></i>
             </button>
         </div>
 
         <!-- Mobile Menu Dropdown -->
-        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-[#0c0c0e] border-b border-zinc-800 py-4 px-6 flex flex-col space-y-4 shadow-2xl">
+        <div id="mobile-menu" class="hidden md:hidden absolute top-[calc(100%+10px)] left-4 right-4 bg-brand-card/95 backdrop-blur-xl border border-brand-emerald/20 rounded-2xl py-4 px-6 flex flex-col space-y-4 shadow-2xl pointer-events-auto">
             <button onclick="router.navigate('home'); toggleMobileMenu()" class="text-left text-sm font-bold uppercase tracking-widest text-zinc-300 hover:text-brand-emerald transition">Inicio</button>
             <button onclick="router.navigate('proyectos'); toggleMobileMenu()" class="text-left text-sm font-bold uppercase tracking-widest text-zinc-300 hover:text-brand-emerald transition">Proyectos</button>
-            <a href="https://www.instagram.com/lycodelife" target="_blank" class="text-left text-sm font-bold uppercase tracking-widest text-zinc-300 hover:text-brand-emerald transition">Instagram</a>
+            <button onclick="router.navigate('nosotros'); toggleMobileMenu()" class="text-left text-sm font-bold uppercase tracking-widest text-zinc-300 hover:text-brand-emerald transition">Quiénes somos</button>
         </div>
     </nav>
 
     <!-- Botones Sociales Flotantes -->
-    <div class="fixed bottom-6 right-6 z-[100] flex flex-col items-end space-y-3">
-        <a href="https://www.instagram.com/lycodelife" target="_blank" class="w-12 h-12 bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] rounded-full flex items-center justify-center text-white shadow-[0_0_20px_rgba(238,42,123,0.3)] hover:scale-110 transition-transform relative group">
+    <div class="fixed bottom-6 right-6 z-[100] flex flex-col items-end space-y-4">
+        <!-- Botón WhatsApp -->
+        <button class="w-12 h-12 bg-[#25D366] rounded-full flex items-center justify-center text-white shadow-[0_0_20px_rgba(37,211,102,0.3)] hover:scale-110 transition-transform relative group border border-white/20">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+            </svg>
+            <span class="absolute right-14 bg-black/80 px-3 py-1.5 rounded-lg text-xs font-bold opacity-0 group-hover:opacity-100 transition whitespace-nowrap backdrop-blur-sm border border-white/10">WhatsApp</span>
+        </button>
+        <!-- Botón Instagram -->
+        <a href="https://www.instagram.com/lycodelife" target="_blank" class="w-12 h-12 bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] rounded-full flex items-center justify-center text-white shadow-[0_0_20px_rgba(238,42,123,0.3)] hover:scale-110 transition-transform relative group border border-white/20">
             <i data-lucide="instagram" class="w-5 h-5"></i>
             <span class="absolute right-14 bg-black/80 px-3 py-1.5 rounded-lg text-xs font-bold opacity-0 group-hover:opacity-100 transition whitespace-nowrap backdrop-blur-sm border border-white/10">Síguenos</span>
         </a>
-        <a href="https://www.tiktok.com/@lycodelife" target="_blank" class="w-12 h-12 bg-[#050507] border border-zinc-800 rounded-full flex items-center justify-center text-white shadow-lg hover:scale-110 hover:border-zinc-600 transition-all relative group">
+        <!-- Botón TikTok -->
+        <a href="https://www.tiktok.com/@lycodelife" target="_blank" class="w-12 h-12 bg-[#050507] border border-brand-emerald/40 rounded-full flex items-center justify-center text-white shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:scale-110 hover:border-brand-emerald transition-all relative group">
             <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-1.13-.32-2.43-.23-3.41.45-.83.57-1.34 1.54-1.39 2.54-.1 1.08.3 2.19 1.05 2.97.77.81 1.89 1.28 3.01 1.23 1.32-.01 2.62-.65 3.34-1.75.51-.72.78-1.59.82-2.48.01-4.13 0-8.26.01-12.39z"/></svg>
-            <span class="absolute right-14 bg-black/80 px-3 py-1.5 rounded-lg text-xs font-bold opacity-0 group-hover:opacity-100 transition whitespace-nowrap backdrop-blur-sm border border-white/10">Ver TikToks</span>
+            <span class="absolute right-14 bg-black/80 px-3 py-1.5 rounded-lg text-xs font-bold opacity-0 group-hover:opacity-100 transition whitespace-nowrap backdrop-blur-sm border border-brand-emerald/20 text-brand-emerald">Ver TikToks</span>
         </a>
     </div>
 
     <!-- CONTENEDOR PRINCIPAL SPA -->
-    <main id="app-root" class="pt-24 min-h-screen flex flex-col">
-        
+    <main id="app-root" class="pt-28 min-h-screen flex flex-col relative">
+
         <!-- ==========================================
              VISTA: INICIO
         =========================================== -->
         <div id="view-home" class="page-view active flex-grow">
             
             <!-- Hero Section -->
-            <section class="relative min-h-[85vh] flex items-center justify-center px-6 text-center">
-                <div class="max-w-4xl mx-auto py-12 md:py-20 z-10 w-full">
+            <section class="relative min-h-[75vh] flex items-center justify-center px-6">
+                <div class="max-w-7xl mx-auto py-12 z-10 w-full relative grid lg:grid-cols-2 gap-16 lg:gap-8 items-center text-center lg:text-left">
                     
-                    <div class="reveal inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-brand-emerald/10 text-brand-emerald text-[10px] md:text-xs font-black mb-8 uppercase tracking-[0.2em] border border-brand-emerald/20 shadow-[0_0_20px_rgba(16,185,129,0.15)] backdrop-blur-sm">
-                        <span class="w-2 h-2 bg-brand-emerald rounded-full animate-pulse"></span>
-                        <span>Python Software Factory</span>
-                    </div>
-                    
-                    <h1 class="reveal font-extrabold mb-8 tracking-tighter text-white text-5xl md:text-7xl lg:text-8xl leading-[1.1]">
-                        Tú diriges. <br>
-                        <span class="text-gradient italic">El código trabaja.</span>
-                    </h1>
+                    <!-- Lado Izquierdo: Textos y Botones -->
+                    <div class="max-w-3xl mx-auto lg:mx-0">
+                        <h1 class="reveal font-extrabold mb-8 tracking-tighter text-white text-5xl md:text-7xl lg:text-[5.5rem] leading-[1.05]">
+                            Tú diriges. <br>
+                            <span class="text-gradient italic">El código trabaja.</span>
+                        </h1>
 
-                    <p class="reveal text-lg md:text-xl text-zinc-400 mb-10 max-w-2xl mx-auto font-medium leading-relaxed">
-                        Recupera cientos de horas al mes eliminando tareas repetitivas. 
-                        Creamos software nativo que se encarga del trabajo pesado por ti.
-                    </p>
+                        <p class="reveal text-lg md:text-xl text-zinc-400 mb-10 max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed" style="transition-delay: 100ms;">
+                            Recupera cientos de horas al mes eliminando tareas repetitivas. 
+                            Creamos software nativo que se encarga del trabajo pesado por ti.
+                        </p>
 
-                    <div class="reveal flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-6">
-                        <button onclick="router.navigate('proyectos')" class="w-full md:w-auto px-10 py-4 bg-brand-emerald text-brand-dark rounded-xl font-black text-sm md:text-base transition-all hover:-translate-y-1 uppercase tracking-tighter btn-glow-emerald">
-                            Ver Sistemas
-                        </button>
-                        <button onclick="toggleContactModal()" class="w-full md:w-auto px-10 py-4 bg-transparent border border-zinc-700 text-white rounded-xl font-bold text-sm md:text-base transition-all hover:-translate-y-1 btn-glow-white">
-                            Agendar Consulta
-                        </button>
+                        <div class="reveal flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-6" style="transition-delay: 200ms;">
+                            <button onclick="router.navigate('proyectos')" class="w-full sm:w-auto px-10 py-4 bg-brand-emerald text-brand-dark rounded-xl font-black text-sm md:text-base transition-all hover:-translate-y-1 uppercase tracking-tighter btn-glow-emerald border border-brand-emerald">
+                                Ver Sistemas
+                            </button>
+                            <button onclick="toggleContactModal()" class="w-full sm:w-auto px-10 py-4 bg-transparent border border-zinc-500 text-white rounded-xl font-bold text-sm md:text-base transition-all hover:-translate-y-1 hover:border-white btn-glow-white">
+                                Agendar Consulta
+                            </button>
+                        </div>
                     </div>
 
-                    <!-- Animación de Pipeline / Nodos Modernos -->
-                    <div class="reveal mt-20 max-w-xl mx-auto">
-                        <div class="glass-card rounded-3xl p-6 md:p-8 relative overflow-hidden group border-zinc-800/40 backdrop-blur-xl">
-                            <p class="text-[9px] md:text-[10px] uppercase tracking-[0.25em] font-bold text-zinc-500 mb-8 text-center">Pipeline de Automatización</p>
+                    <!-- Lado Derecho: Composición Gráfica HUD Flotante -->
+                    <div class="reveal relative w-full max-w-lg mx-auto lg:max-w-none lg:h-[450px] flex items-center justify-center mt-10 lg:mt-0" style="transition-delay: 300ms;">
+                        
+                        <!-- Tarjeta Terminal Flotante -->
+                        <div class="absolute -top-6 -left-4 md:-top-4 md:-left-12 z-20 w-56 md:w-64 glass-card rounded-2xl p-4 text-left shadow-[0_0_30px_rgba(16,185,129,0.05)] border-brand-emerald/30 animate-float hidden sm:block">
+                            <div class="flex space-x-2 mb-3">
+                                <div class="w-2.5 h-2.5 rounded-full bg-zinc-700"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-zinc-700"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-zinc-700"></div>
+                            </div>
+                            <div class="font-mono text-[10px] md:text-xs leading-relaxed">
+                                <p class="text-zinc-500">Lycode_Bot.exe --run</p>
+                                <p class="text-blue-400 mt-1">def <span class="text-yellow-300">automatizar</span>():</p>
+                                <p class="text-zinc-400 pl-3">procesando_datos()...</p>
+                                <p class="text-brand-emerald font-bold mt-1">> Éxito: Tarea en 0.8s</p>
+                            </div>
+                        </div>
+
+                        <!-- Tarjeta Central: Pipeline de Automatización -->
+                        <div class="glass-card rounded-3xl p-6 md:p-8 relative overflow-hidden group border-brand-emerald/20 backdrop-blur-xl shadow-[0_0_40px_rgba(16,185,129,0.08)] w-full z-10 animate-float" style="animation-delay: 1s;">
+                            <div class="absolute inset-0 bg-brand-emerald/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
                             
-                            <div class="flex items-center justify-between relative px-2 md:px-6">
+                            <p class="text-[9px] md:text-[10px] uppercase tracking-[0.25em] font-bold text-brand-emerald mb-8 text-center flex items-center justify-center">
+                                <i data-lucide="activity" class="w-3 h-3 mr-2 animate-pulse"></i>
+                                Pipeline de Automatización
+                            </p>
+                            
+                            <div class="flex items-center justify-between relative px-1 md:px-4">
                                 <!-- Linea conectora de fondo -->
-                                <div class="absolute top-1/2 left-10 right-10 h-px bg-zinc-800/80 -translate-y-1/2 overflow-hidden rounded-full">
+                                <div class="absolute top-1/2 left-8 right-8 h-px bg-brand-emerald/30 -translate-y-1/2 overflow-hidden rounded-full border-y border-brand-dark">
                                     <div class="flow-particle left-0"></div>
                                     <div class="flow-particle left-0" style="animation-delay: 1s;"></div>
                                 </div>
                                 
-                                <!-- Nodo 1: Input -->
-                                <div class="relative z-10 flex flex-col items-center gap-3 bg-[#0c0c0e] p-2 rounded-xl">
-                                    <div class="w-12 h-12 rounded-2xl bg-zinc-900 border border-zinc-700/50 flex items-center justify-center shadow-inner">
-                                        <i data-lucide="database" class="w-5 h-5 text-zinc-400"></i>
+                                <!-- Nodo 1 -->
+                                <div class="relative z-10 flex flex-col items-center gap-3 bg-brand-dark p-2 rounded-xl border border-zinc-800">
+                                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-zinc-900 border border-zinc-700/50 flex items-center justify-center shadow-inner">
+                                        <i data-lucide="database" class="w-4 h-4 md:w-5 md:h-5 text-zinc-400"></i>
                                     </div>
-                                    <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Datos Brutos</span>
+                                    <span class="text-[9px] md:text-[10px] font-bold text-zinc-500 uppercase tracking-wider hidden sm:block">Datos</span>
                                 </div>
 
-                                <!-- Nodo 2: Bot (LycodeLife) -->
+                                <!-- Nodo 2 (Bot) -->
                                 <div class="relative z-10 flex flex-col items-center gap-3">
-                                    <div class="w-16 h-16 rounded-2xl bg-brand-emerald/10 border border-brand-emerald/40 flex items-center justify-center node-pulse backdrop-blur-md shadow-[0_0_20px_rgba(16,185,129,0.2)]">
-                                        <i data-lucide="cpu" class="w-7 h-7 text-brand-emerald"></i>
+                                    <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-brand-emerald/10 border border-brand-emerald/60 flex items-center justify-center node-pulse backdrop-blur-md shadow-[0_0_25px_rgba(16,185,129,0.3)]">
+                                        <i data-lucide="cpu" class="w-6 h-6 md:w-7 md:h-7 text-brand-emerald"></i>
                                     </div>
-                                    <span class="text-[10px] font-bold text-brand-emerald uppercase tracking-widest bg-brand-emerald/10 px-2 py-0.5 rounded-md">Lycode Bot</span>
+                                    <span class="text-[9px] md:text-[10px] font-bold text-brand-dark bg-brand-emerald uppercase tracking-widest px-2.5 py-1 rounded-md shadow-[0_0_10px_rgba(16,185,129,0.4)]">Bot</span>
                                 </div>
 
-                                <!-- Nodo 3: Output -->
-                                <div class="relative z-10 flex flex-col items-center gap-3 bg-[#0c0c0e] p-2 rounded-xl">
-                                    <div class="w-12 h-12 rounded-2xl bg-zinc-900 border border-zinc-700/50 flex items-center justify-center shadow-inner">
-                                        <i data-lucide="zap" class="w-5 h-5 text-blue-400"></i>
+                                <!-- Nodo 3 -->
+                                <div class="relative z-10 flex flex-col items-center gap-3 bg-brand-dark p-2 rounded-xl border border-zinc-800">
+                                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-zinc-900 border border-zinc-700/50 flex items-center justify-center shadow-inner">
+                                        <i data-lucide="zap" class="w-4 h-4 md:w-5 md:h-5 text-blue-400"></i>
                                     </div>
-                                    <span class="text-[10px] font-bold text-blue-400 uppercase tracking-wider">Resultados</span>
+                                    <span class="text-[9px] md:text-[10px] font-bold text-blue-400 uppercase tracking-wider hidden sm:block">Resultados</span>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
+                        <!-- Tarjeta Datos Flotante -->
+                        <div class="absolute -bottom-8 -right-2 md:-bottom-6 md:-right-8 z-20 w-44 glass-card rounded-2xl p-4 text-left shadow-[0_0_30px_rgba(59,130,246,0.1)] border-blue-500/30 animate-float-delayed hidden sm:block">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center border border-blue-500/20">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4 text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[9px] text-zinc-400 uppercase tracking-widest font-bold">Precisión</p>
+                                    <p class="text-white font-black text-sm">100.0%</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </section>
 
             <!-- Stats Rápidas -->
-            <section class="py-16 md:py-24 border-t border-zinc-900/50 bg-[#070709]">
-                <div class="max-w-5xl mx-auto px-6">
+            <section class="py-16 md:py-24 border-t border-brand-emerald/10 bg-[#070709] relative">
+                <!-- Decoración HUD -->
+                <div class="absolute left-0 top-0 w-1 h-16 bg-brand-emerald/40"></div>
+                <div class="absolute right-0 bottom-0 w-1 h-16 bg-brand-emerald/40"></div>
+
+                <div class="max-w-6xl mx-auto px-6 relative z-10">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-                        <div class="glass-card rounded-3xl p-8 text-center reveal">
+                        <div class="glass-card rounded-3xl p-8 text-center reveal border-brand-emerald/10">
                             <i data-lucide="timer" class="w-10 h-10 text-brand-emerald mx-auto mb-4 opacity-80"></i>
-                            <p class="text-5xl md:text-6xl font-black mb-2 text-white">90<span class="text-brand-emerald">%</span></p>
+                            <p class="text-5xl md:text-6xl font-black mb-2 text-white drop-shadow-[0_0_15px_rgba(16,185,129,0.3)]">90<span class="text-brand-emerald">%</span></p>
                             <h4 class="text-xs font-bold text-zinc-400 uppercase tracking-widest">Ahorro de Tiempo</h4>
                         </div>
-                        <div class="glass-card rounded-3xl p-8 text-center reveal" style="transition-delay: 100ms;">
+                        <div class="glass-card rounded-3xl p-8 text-center reveal border-brand-emerald/10" style="transition-delay: 100ms;">
                             <i data-lucide="shield-check" class="w-10 h-10 text-brand-emerald mx-auto mb-4 opacity-80"></i>
-                            <p class="text-5xl md:text-6xl font-black mb-2 text-white">0<span class="text-brand-emerald">%</span></p>
+                            <p class="text-5xl md:text-6xl font-black mb-2 text-white drop-shadow-[0_0_15px_rgba(16,185,129,0.3)]">0<span class="text-brand-emerald">%</span></p>
                             <h4 class="text-xs font-bold text-zinc-400 uppercase tracking-widest">Margen de Error</h4>
                         </div>
-                        <div class="glass-card rounded-3xl p-8 text-center reveal" style="transition-delay: 200ms;">
+                        <div class="glass-card rounded-3xl p-8 text-center reveal border-brand-emerald/10" style="transition-delay: 200ms;">
                             <i data-lucide="rocket" class="w-10 h-10 text-brand-emerald mx-auto mb-4 opacity-80"></i>
-                            <p class="text-5xl md:text-6xl font-black mb-2 text-white">+50<span class="text-brand-emerald">h</span></p>
+                            <p class="text-5xl md:text-6xl font-black mb-2 text-white drop-shadow-[0_0_15px_rgba(16,185,129,0.3)]">+50<span class="text-brand-emerald">h</span></p>
                             <h4 class="text-xs font-bold text-zinc-400 uppercase tracking-widest">Libertad Mensual</h4>
                         </div>
                     </div>
@@ -357,14 +457,14 @@
             </section>
             
             <!-- Reseñas de Google (Randomizadas) -->
-            <section class="py-20 px-6 bg-[#0c0c0e] relative overflow-hidden border-t border-zinc-900/50">
+            <section class="py-20 px-6 bg-[#0c0c0e] relative overflow-hidden border-t border-brand-emerald/10">
                 <!-- Luz de fondo esmeralda -->
                 <div class="absolute top-0 right-0 w-96 h-96 bg-brand-emerald/5 rounded-full blur-[100px] pointer-events-none"></div>
                 
                 <div class="max-w-6xl mx-auto relative z-10">
                     <div class="text-center mb-16 reveal">
                         <!-- Botón indicador de Google -->
-                        <div class="inline-flex items-center space-x-2 bg-white/5 border border-white/10 px-4 py-2 rounded-full mb-6">
+                        <div class="inline-flex items-center space-x-2 bg-white/5 border border-brand-emerald/20 px-4 py-2 rounded-full mb-6 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
                             <svg class="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                                 <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -373,7 +473,7 @@
                             </svg>
                             <span class="text-[10px] md:text-xs font-bold text-white tracking-widest uppercase">Reseñas Verificadas</span>
                         </div>
-                        <h2 class="text-3xl md:text-5xl font-black text-white">Confianza <span class="text-brand-emerald italic">Automatizada</span></h2>
+                        <h2 class="text-3xl md:text-5xl font-black text-white">Confianza <span class="text-brand-emerald italic drop-shadow-[0_0_10px_rgba(16,185,129,0.5)]">Automatizada</span></h2>
                         <p class="text-zinc-400 max-w-xl mx-auto mt-4 font-medium">Personas que ya delegaron sus tareas aburridas. Mira lo que opinan sobre su nueva libertad.</p>
                     </div>
 
@@ -385,16 +485,92 @@
             </section>
 
             <!-- Mini preview de Proyectos -->
-            <section class="py-20 px-6 text-center">
+            <section class="py-20 px-6 text-center border-t border-brand-emerald/10">
                 <div class="reveal">
                     <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">Descubre de lo que somos capaces</h2>
                     <p class="text-zinc-400 max-w-xl mx-auto mb-10">Explora nuestro portafolio de sistemas diseñados para automatizar ventas, finanzas y extracción de datos.</p>
-                    <button onclick="router.navigate('proyectos')" class="inline-flex items-center space-x-2 text-brand-emerald font-bold hover:text-emerald-400 transition-colors group">
-                        <span>Ir a la galería de proyectos</span>
+                    <button onclick="router.navigate('proyectos')" class="inline-flex items-center space-x-2 text-brand-emerald font-bold hover:text-emerald-400 transition-colors group bg-brand-emerald/10 px-6 py-3 rounded-xl border border-brand-emerald/30 hover:shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                        <i data-lucide="terminal" class="w-5 h-5"></i>
+                        <span class="uppercase tracking-widest text-[11px]">Ir a la galería de proyectos</span>
                         <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
                     </button>
                 </div>
             </section>
+        </div>
+
+        <!-- ==========================================
+             VISTA: QUIÉNES SOMOS
+        =========================================== -->
+        <div id="view-nosotros" class="page-view flex-grow">
+            <!-- Header Nosotros -->
+            <div class="pt-4 pb-16 px-6 text-center border-b border-brand-emerald/10 relative">
+                <div class="absolute inset-0 bg-gradient-to-b from-brand-emerald/5 to-transparent pointer-events-none"></div>
+                <div class="reveal relative z-10">
+                    <span class="text-brand-emerald text-sm font-bold tracking-[0.2em] uppercase mb-4 block flex items-center justify-center">
+                        <i data-lucide="fingerprint" class="w-4 h-4 mr-2"></i> Identidad
+                    </span>
+                    <h2 class="text-4xl md:text-6xl font-black tracking-tighter text-white leading-tight">
+                        Nuestra <span class="text-gradient italic drop-shadow-[0_0_15px_rgba(16,185,129,0.3)]">Esencia.</span>
+                    </h2>
+                </div>
+            </div>
+
+            <!-- Contenido Nosotros -->
+            <div class="max-w-6xl mx-auto px-6 py-16 md:py-24">
+                <div class="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+                    
+                    <div class="reveal order-2 lg:order-1">
+                        <h3 class="text-3xl md:text-5xl font-black mb-8 text-white leading-tight">
+                            Si tienes una idea, <br>
+                            <span class="text-brand-emerald italic">la hacemos realidad.</span>
+                        </h3>
+                        <div class="space-y-6 text-zinc-400 text-base md:text-lg leading-relaxed">
+                            <p>
+                                Somos una empresa remota que brinda servicios personalizados de automatización de tareas repetitivas hechas a medida para tu negocio.
+                            </p>
+                            <p>
+                                Creemos firmemente que el tiempo de las personas es demasiado valioso como para desperdiciarlo en hojas de cálculo y clicks mecánicos. Desarrollamos herramientas nativas de élite que se adaptan a tus flujos de trabajo como un guante.
+                            </p>
+                        </div>
+
+                        <div class="mt-10 grid grid-cols-2 gap-6">
+                            <div class="glass-card p-5 rounded-2xl border-brand-emerald/20">
+                                <i data-lucide="globe-2" class="text-brand-emerald w-6 h-6 mb-3"></i>
+                                <h4 class="text-white font-bold text-sm mb-1">100% Remoto</h4>
+                                <p class="text-[10px] text-zinc-500 uppercase tracking-widest">Trabajamos sin fronteras</p>
+                            </div>
+                            <div class="glass-card p-5 rounded-2xl border-brand-emerald/20">
+                                <i data-lucide="code-2" class="text-brand-emerald w-6 h-6 mb-3"></i>
+                                <h4 class="text-white font-bold text-sm mb-1">Código a Medida</h4>
+                                <p class="text-[10px] text-zinc-500 uppercase tracking-widest">Cero plantillas genéricas</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reveal order-1 lg:order-2 relative" style="transition-delay: 200ms;">
+                        <!-- Composición visual elegante -->
+                        <div class="relative w-full aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden glass-card border-brand-emerald/30 shadow-[0_0_50px_rgba(16,185,129,0.1)] group">
+                            <!-- Imagen de Unsplash muy abstracta y tecnológica -->
+                            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2070" alt="Automatización Tecnológica" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-1000 ease-out mix-blend-luminosity">
+                            
+                            <!-- Overlay esmeralda -->
+                            <div class="absolute inset-0 bg-gradient-to-tr from-[#050507] via-brand-emerald/10 to-transparent"></div>
+                            
+                            <!-- Elementos HUD sobre la imagen -->
+                            <div class="absolute top-6 left-6 w-12 h-12 border-t-2 border-l-2 border-brand-emerald/50"></div>
+                            <div class="absolute bottom-6 right-6 w-12 h-12 border-b-2 border-r-2 border-brand-emerald/50"></div>
+                            
+                            <div class="absolute bottom-8 left-8 bg-black/60 backdrop-blur-md border border-brand-emerald/30 p-4 rounded-2xl">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-3 h-3 bg-brand-emerald rounded-full animate-pulse"></div>
+                                    <span class="text-xs font-bold text-white uppercase tracking-widest">Conexión Global</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
 
         <!-- ==========================================
@@ -403,11 +579,14 @@
         <div id="view-proyectos" class="page-view flex-grow">
             
             <!-- Header Proyectos -->
-            <div class="pt-10 pb-16 px-6 text-center border-b border-white/5">
-                <div class="reveal">
-                    <span class="text-brand-emerald text-sm font-bold tracking-[0.2em] uppercase mb-4 block">Portafolio</span>
+            <div class="pt-4 pb-16 px-6 text-center border-b border-brand-emerald/10 relative">
+                <div class="absolute inset-0 bg-gradient-to-b from-brand-emerald/5 to-transparent pointer-events-none"></div>
+                <div class="reveal relative z-10">
+                    <span class="text-brand-emerald text-sm font-bold tracking-[0.2em] uppercase mb-4 block flex items-center justify-center">
+                        <i data-lucide="folder-code" class="w-4 h-4 mr-2"></i> Portafolio
+                    </span>
                     <h2 class="text-4xl md:text-6xl font-black tracking-tighter text-white leading-tight">
-                        Sistemas que <span class="text-gradient italic">eliminan</span><br class="hidden md:block"> el trabajo manual.
+                        Sistemas que <span class="text-gradient italic drop-shadow-[0_0_15px_rgba(16,185,129,0.3)]">eliminan</span><br class="hidden md:block"> el trabajo manual.
                     </h2>
                 </div>
             </div>
@@ -415,11 +594,11 @@
             <div class="max-w-6xl mx-auto px-6 py-16 md:py-24 space-y-24 md:space-y-32">
 
                 <!-- PROYECTO 1: WHATSAPP LIFE -->
-                <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center reveal">
+                <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center reveal relative">
                     <div class="order-2 lg:order-1 flex flex-col justify-center text-center lg:text-left">
-                        <div class="mb-6 inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 mx-auto lg:mx-0">
+                        <div class="mb-6 inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-emerald/10 border border-brand-emerald/30 mx-auto lg:mx-0 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
                             <i data-lucide="message-circle" class="w-4 h-4 text-brand-emerald"></i>
-                            <span class="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-300">Comunicación</span>
+                            <span class="text-[10px] font-black uppercase tracking-[0.2em] text-brand-emerald">Comunicación</span>
                         </div>
                         
                         <h3 class="text-4xl md:text-5xl font-black mb-6 text-white italic tracking-tighter">Whatsapp Life</h3>
@@ -429,14 +608,14 @@
                         </p>
                         
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                            <div class="glass-card p-4 rounded-2xl flex items-center space-x-4">
-                                <div class="w-10 h-10 rounded-full bg-brand-emerald/10 flex items-center justify-center flex-shrink-0">
+                            <div class="glass-card p-4 rounded-2xl flex items-center space-x-4 border-brand-emerald/20">
+                                <div class="w-10 h-10 rounded-full bg-brand-emerald/10 flex items-center justify-center flex-shrink-0 shadow-[0_0_10px_rgba(16,185,129,0.2)]">
                                     <i data-lucide="clock" class="text-brand-emerald w-5 h-5"></i>
                                 </div>
                                 <span class="font-bold text-white text-xs uppercase tracking-wider">Intervalos Seguros</span>
                             </div>
-                            <div class="glass-card p-4 rounded-2xl flex items-center space-x-4">
-                                <div class="w-10 h-10 rounded-full bg-brand-emerald/10 flex items-center justify-center flex-shrink-0">
+                            <div class="glass-card p-4 rounded-2xl flex items-center space-x-4 border-brand-emerald/20">
+                                <div class="w-10 h-10 rounded-full bg-brand-emerald/10 flex items-center justify-center flex-shrink-0 shadow-[0_0_10px_rgba(16,185,129,0.2)]">
                                     <i data-lucide="layout-template" class="text-brand-emerald w-5 h-5"></i>
                                 </div>
                                 <span class="font-bold text-white text-xs uppercase tracking-wider">Plantillas Custom</span>
@@ -444,23 +623,25 @@
                         </div>
                     </div>
                     <!-- Contenedor TikTok Diferido -->
-                    <div class="order-1 lg:order-2 flex justify-center w-full">
-                        <div class="video-wrapper tiktok-container" data-video-id="7604655676429700372">
+                    <div class="order-1 lg:order-2 flex justify-center w-full relative">
+                        <div class="absolute inset-0 bg-brand-emerald/20 blur-[60px] rounded-full pointer-events-none"></div>
+                        <div class="video-wrapper tiktok-container border-brand-emerald/30 shadow-[0_0_30px_rgba(16,185,129,0.15)]" data-video-id="7604655676429700372">
                             <!-- El script inyectará el embed aquí al hacerse visible -->
                         </div>
                     </div>
                 </div>
 
                 <!-- PROYECTO 2: PRICE CLEAN -->
-                <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center reveal">
+                <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center reveal relative">
                     <!-- Contenedor TikTok Diferido -->
-                    <div class="flex justify-center w-full">
-                        <div class="video-wrapper tiktok-container" data-video-id="7602347695189134612">
+                    <div class="flex justify-center w-full relative">
+                        <div class="absolute inset-0 bg-blue-500/20 blur-[60px] rounded-full pointer-events-none"></div>
+                        <div class="video-wrapper tiktok-container border-blue-500/30 shadow-[0_0_30px_rgba(59,130,246,0.15)]" data-video-id="7602347695189134612">
                             <!-- Inyección dinámica -->
                         </div>
                     </div>
                     <div class="flex flex-col justify-center text-center lg:text-left">
-                        <div class="mb-6 inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 mx-auto lg:mx-0">
+                        <div class="mb-6 inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 mx-auto lg:mx-0 shadow-[0_0_15px_rgba(59,130,246,0.1)]">
                             <i data-lucide="calculator" class="w-4 h-4 text-blue-400"></i>
                             <span class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Finanzas</span>
                         </div>
@@ -472,12 +653,12 @@
                         </p>
                         
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="glass-card p-5 rounded-2xl text-center">
-                                <i data-lucide="database-zap" class="text-blue-400 mx-auto mb-3 w-8 h-8"></i>
+                            <div class="glass-card p-5 rounded-2xl text-center border-blue-500/20">
+                                <i data-lucide="database-zap" class="text-blue-400 mx-auto mb-3 w-8 h-8 drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]"></i>
                                 <p class="text-xs font-bold text-white uppercase tracking-wider">Limpieza Pro</p>
                             </div>
-                            <div class="glass-card p-5 rounded-2xl text-center">
-                                <i data-lucide="trending-up" class="text-blue-400 mx-auto mb-3 w-8 h-8"></i>
+                            <div class="glass-card p-5 rounded-2xl text-center border-blue-500/20">
+                                <i data-lucide="trending-up" class="text-blue-400 mx-auto mb-3 w-8 h-8 drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]"></i>
                                 <p class="text-xs font-bold text-white uppercase tracking-wider">Márgenes</p>
                             </div>
                         </div>
@@ -485,9 +666,9 @@
                 </div>
 
                 <!-- PROYECTO 3: SMART EXTRACT -->
-                <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center reveal">
+                <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center reveal relative">
                     <div class="order-2 lg:order-1 flex flex-col justify-center text-center lg:text-left">
-                        <div class="mb-6 inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 mx-auto lg:mx-0">
+                        <div class="mb-6 inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 mx-auto lg:mx-0 shadow-[0_0_15px_rgba(168,85,247,0.1)]">
                             <i data-lucide="file-text" class="w-4 h-4 text-purple-400"></i>
                             <span class="text-[10px] font-black uppercase tracking-[0.2em] text-purple-400">Data Entry</span>
                         </div>
@@ -499,18 +680,23 @@
                         </p>
                         
                         <div class="space-y-4 max-w-md mx-auto lg:mx-0">
-                            <div class="glass-card p-4 rounded-xl flex items-center space-x-4">
-                                <i data-lucide="check-circle-2" class="text-purple-400 w-6 h-6 flex-shrink-0"></i>
+                            <div class="glass-card p-4 rounded-xl flex items-center space-x-4 border-purple-500/20">
+                                <div class="w-8 h-8 rounded-full bg-purple-500/10 flex items-center justify-center shadow-[0_0_8px_rgba(168,85,247,0.3)]">
+                                    <i data-lucide="check-circle-2" class="text-purple-400 w-5 h-5 flex-shrink-0"></i>
+                                </div>
                                 <span class="font-bold text-zinc-300 text-sm">Detección automática de RUC y Totales.</span>
                             </div>
-                            <div class="glass-card p-4 rounded-xl flex items-center space-x-4">
-                                <i data-lucide="layers" class="text-purple-400 w-6 h-6 flex-shrink-0"></i>
+                            <div class="glass-card p-4 rounded-xl flex items-center space-x-4 border-purple-500/20">
+                                <div class="w-8 h-8 rounded-full bg-purple-500/10 flex items-center justify-center shadow-[0_0_8px_rgba(168,85,247,0.3)]">
+                                    <i data-lucide="layers" class="text-purple-400 w-5 h-5 flex-shrink-0"></i>
+                                </div>
                                 <span class="font-bold text-zinc-300 text-sm">Procesamiento masivo de lotes (100+ PDFs).</span>
                             </div>
                         </div>
                     </div>
-                    <div class="order-1 lg:order-2 flex justify-center w-full">
-                        <div class="video-wrapper tiktok-container" data-video-id="7601620544298994965">
+                    <div class="order-1 lg:order-2 flex justify-center w-full relative">
+                        <div class="absolute inset-0 bg-purple-500/20 blur-[60px] rounded-full pointer-events-none"></div>
+                        <div class="video-wrapper tiktok-container border-purple-500/30 shadow-[0_0_30px_rgba(168,85,247,0.15)]" data-video-id="7601620544298994965">
                             <!-- Inyección dinámica -->
                         </div>
                     </div>
@@ -527,14 +713,14 @@
         <div class="absolute inset-0 bg-black/70 backdrop-blur-md transition-opacity" onclick="toggleContactModal()"></div>
         
         <!-- Tarjeta del Modal -->
-        <div class="glass-card w-full max-w-md p-8 rounded-3xl relative z-10 transform transition-all duration-300 scale-95 opacity-0 border-zinc-800" id="contact-modal-content">
+        <div class="glass-card w-full max-w-md p-8 rounded-3xl relative z-10 transform transition-all duration-300 scale-95 opacity-0 border-brand-emerald/30 shadow-[0_0_50px_rgba(16,185,129,0.1)]" id="contact-modal-content">
             <button onclick="toggleContactModal()" class="absolute top-5 right-5 text-zinc-500 hover:text-white transition-colors bg-zinc-900 hover:bg-zinc-800 rounded-full p-2">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
             
             <div class="mb-6 text-center">
-                <div class="w-12 h-12 bg-brand-emerald/10 border border-brand-emerald/30 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <i data-lucide="zap" class="w-6 h-6 text-brand-emerald"></i>
+                <div class="w-12 h-12 bg-brand-emerald/10 border border-brand-emerald/50 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+                    <i data-lucide="terminal" class="w-6 h-6 text-brand-emerald"></i>
                 </div>
                 <h3 class="text-2xl font-black text-white italic tracking-tight">Inicia tu <span class="text-brand-emerald">Automatización</span></h3>
                 <p class="text-zinc-400 text-xs mt-2 font-medium">Déjanos tus datos y nos pondremos en contacto contigo lo antes posible para transformar tu negocio.</p>
@@ -547,31 +733,35 @@
                 <input type="hidden" name="_template" value="table">
                 
                 <div>
-                    <label class="block text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5 ml-1">Tu Nombre</label>
-                    <input type="text" name="name" required class="w-full bg-zinc-900/50 border border-zinc-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-brand-emerald/50 focus:ring-1 focus:ring-brand-emerald/50 transition-all text-sm" placeholder="Ej. Carlos Mendoza">
+                    <label class="block text-[10px] font-bold text-brand-emerald uppercase tracking-widest mb-1.5 ml-1">Tu Nombre</label>
+                    <input type="text" name="name" required class="w-full bg-zinc-900/50 border border-zinc-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-brand-emerald focus:ring-1 focus:ring-brand-emerald transition-all text-sm" placeholder="Ej. Carlos Mendoza">
                 </div>
                 <div>
-                    <label class="block text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5 ml-1">Tu Correo</label>
-                    <input type="email" name="email" required class="w-full bg-zinc-900/50 border border-zinc-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-brand-emerald/50 focus:ring-1 focus:ring-brand-emerald/50 transition-all text-sm" placeholder="carlos@correo.com">
+                    <label class="block text-[10px] font-bold text-brand-emerald uppercase tracking-widest mb-1.5 ml-1">Tu Correo</label>
+                    <input type="email" name="email" required class="w-full bg-zinc-900/50 border border-zinc-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-brand-emerald focus:ring-1 focus:ring-brand-emerald transition-all text-sm" placeholder="carlos@correo.com">
                 </div>
                 <div>
-                    <label class="block text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5 ml-1">Detalles de tu proyecto</label>
-                    <textarea name="message" required rows="3" class="w-full bg-zinc-900/50 border border-zinc-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-brand-emerald/50 focus:ring-1 focus:ring-brand-emerald/50 transition-all resize-none text-sm" placeholder="¿Qué tarea repetitiva te gustaría automatizar?"></textarea>
+                    <label class="block text-[10px] font-bold text-brand-emerald uppercase tracking-widest mb-1.5 ml-1">Detalles de tu proyecto</label>
+                    <textarea name="message" required rows="3" class="w-full bg-zinc-900/50 border border-zinc-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-brand-emerald focus:ring-1 focus:ring-brand-emerald transition-all resize-none text-sm" placeholder="¿Qué tarea repetitiva te gustaría automatizar?"></textarea>
                 </div>
                 
                 <button type="submit" class="w-full py-4 bg-brand-emerald text-brand-dark rounded-xl font-black text-sm transition-all hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] uppercase tracking-tighter mt-6">
-                    Enviar Mensaje
+                    <span class="flex items-center justify-center">
+                        <i data-lucide="send" class="w-4 h-4 mr-2"></i>
+                        Enviar Mensaje
+                    </span>
                 </button>
             </form>
         </div>
     </div>
 
     <!-- FOOTER UNIVERSAL -->
-    <footer class="py-12 border-t border-white/5 bg-[#050507] mt-auto">
-        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+    <footer class="py-12 border-t border-brand-emerald/20 bg-[#050507] mt-auto relative overflow-hidden">
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-brand-emerald/5 blur-[100px] rounded-full pointer-events-none"></div>
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8 relative z-10">
             
             <div class="flex items-center space-x-3">
-                <div class="brand-logo-box w-8 h-8">
+                <div class="brand-logo-box w-8 h-8 shadow-[0_0_15px_rgba(16,185,129,0.3)]">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="#050507" stroke="#050507" stroke-width="1.5" stroke-linejoin="round"/>
                     </svg>
@@ -582,19 +772,19 @@
             <div class="text-center md:text-right">
                 <p class="text-zinc-400 text-sm font-medium mb-4">¿Listo para dejar que la tecnología trabaje por ti?</p>
                 <div class="flex items-center justify-center md:justify-end space-x-6">
-                    <a href="https://www.tiktok.com/@lycodelife" target="_blank" class="text-zinc-500 hover:text-white transition flex items-center space-x-2">
-                        <i data-lucide="video" class="w-4 h-4"></i>
+                    <a href="https://www.tiktok.com/@lycodelife" target="_blank" class="text-zinc-500 hover:text-brand-emerald transition flex items-center space-x-2 group">
+                        <i data-lucide="video" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
                         <span class="text-xs font-bold uppercase tracking-widest">TikTok</span>
                     </a>
-                    <a href="https://www.instagram.com/lycodelife" target="_blank" class="text-zinc-500 hover:text-white transition flex items-center space-x-2">
-                        <i data-lucide="instagram" class="w-4 h-4"></i>
+                    <a href="https://www.instagram.com/lycodelife" target="_blank" class="text-zinc-500 hover:text-brand-emerald transition flex items-center space-x-2 group">
+                        <i data-lucide="instagram" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
                         <span class="text-xs font-bold uppercase tracking-widest">Instagram</span>
                     </a>
                 </div>
             </div>
         </div>
-        <div class="mt-12 text-center text-zinc-600 text-xs">
-            &copy; 2026 LycodeLife. Todos los derechos reservados.
+        <div class="mt-12 text-center text-zinc-600 text-[10px] uppercase tracking-widest relative z-10">
+            &copy; 2026 LycodeLife System. Todos los derechos reservados.
         </div>
     </footer>
 
@@ -606,7 +796,7 @@
         // --- LÓGICA DE RESEÑAS RANDOM (9 en total) ---
         const reviewsData = [
             { name: "Carlos M.", role: "Director Comercial", initial: "C", stars: 5, text: "Implementamos el bot de facturación y pasamos de tardar 3 días a 15 minutos. Una locura.", color: "bg-blue-500/20 text-blue-400" },
-            { name: "Laura G.", role: "Agencia de Marketing", initial: "L", stars: 5, text: "El sistema de WhatsApp masivo nos salvó la campaña. Cero baneos, todo se mandó perfecto.", color: "bg-emerald-500/20 text-emerald-400" },
+            { name: "Laura G.", role: "Agencia de Marketing", initial: "L", stars: 5, text: "El sistema de WhatsApp masivo nos salvó la campaña. Cero baneos, todo se mandó perfecto.", color: "bg-brand-emerald/20 text-brand-emerald" },
             { name: "Estudio R.", role: "Contabilidad", initial: "E", stars: 5, text: "Usábamos 2 personas para limpiar Excel todos los días. Ahora PriceClean lo hace automático.", color: "bg-purple-500/20 text-purple-400" },
             { name: "Martín P.", role: "E-commerce Manager", initial: "M", stars: 4, text: "Muy buena integración. Nos ahorra unas 20 horas semanales en actualización de precios. Gran soporte.", color: "bg-orange-500/20 text-orange-400" },
             { name: "Sofía V.", role: "Recursos Humanos", initial: "S", stars: 5, text: "Automatizamos el envío de recibos de sueldo por WhatsApp. Los empleados están felices.", color: "bg-pink-500/20 text-pink-400" },
@@ -630,29 +820,29 @@
                 let starsHtml = '';
                 for(let i = 0; i < 5; i++) {
                     if(i < review.stars) {
-                        starsHtml += '<i data-lucide="star" class="w-3.5 h-3.5 text-yellow-500 fill-current"></i>';
+                        starsHtml += '<i data-lucide="star" class="w-3.5 h-3.5 text-yellow-500 fill-current drop-shadow-[0_0_5px_rgba(234,179,8,0.5)]"></i>';
                     } else {
-                        starsHtml += '<i data-lucide="star" class="w-3.5 h-3.5 text-zinc-600"></i>';
+                        starsHtml += '<i data-lucide="star" class="w-3.5 h-3.5 text-zinc-800"></i>';
                     }
                 }
 
                 const delay = index * 100;
                 
                 const html = `
-                    <div class="glass-card p-6 md:p-8 rounded-3xl reveal hover:-translate-y-2 transition-transform duration-300" style="transition-delay: ${delay}ms;">
+                    <div class="glass-card p-6 md:p-8 rounded-3xl reveal hover:-translate-y-2 transition-transform duration-300 border-zinc-800 hover:border-brand-emerald/50" style="transition-delay: ${delay}ms;">
                         <div class="flex justify-between items-start mb-6">
                             <div class="flex items-center space-x-3">
-                                <div class="w-10 h-10 rounded-full ${review.color} flex items-center justify-center font-bold">${review.initial}</div>
+                                <div class="w-10 h-10 rounded-full ${review.color} flex items-center justify-center font-bold border border-current shadow-[0_0_10px_currentColor]">${review.initial}</div>
                                 <div>
                                     <h4 class="text-sm font-bold text-white">${review.name}</h4>
-                                    <p class="text-[10px] text-zinc-500">${review.role}</p>
+                                    <p class="text-[10px] text-zinc-500 uppercase tracking-widest">${review.role}</p>
                                 </div>
                             </div>
                             <div class="flex space-x-1">
                                 ${starsHtml}
                             </div>
                         </div>
-                        <p class="text-sm text-zinc-300 leading-relaxed italic">"${review.text}"</p>
+                        <p class="text-sm text-zinc-400 leading-relaxed italic">"${review.text}"</p>
                     </div>
                 `;
                 container.innerHTML += html;
@@ -703,12 +893,15 @@
 
         function updateNavVisuals(activeId) {
             document.querySelectorAll('.nav-link').forEach(link => {
-                if(link.textContent.toLowerCase() === activeId) {
+                const dot = link.querySelector('.nav-dot');
+                if(link.textContent.toLowerCase().trim() === activeId) {
                     link.classList.add('text-brand-emerald');
                     link.classList.remove('text-zinc-400');
+                    if(dot) dot.classList.remove('opacity-0');
                 } else {
                     link.classList.remove('text-brand-emerald');
                     link.classList.add('text-zinc-400');
+                    if(dot) dot.classList.add('opacity-0');
                 }
             });
         }
@@ -801,11 +994,11 @@
             triggerReveals();
             
             window.addEventListener('scroll', () => {
-                const nav = document.querySelector('nav');
+                const nav = document.getElementById('main-nav').querySelector('.hud-nav');
                 if(window.scrollY > 20) {
-                    nav.classList.add('shadow-lg', 'bg-brand-card/90');
+                    nav.classList.add('scrolled');
                 } else {
-                    nav.classList.remove('shadow-lg', 'bg-brand-card/90');
+                    nav.classList.remove('scrolled');
                 }
             });
         });
