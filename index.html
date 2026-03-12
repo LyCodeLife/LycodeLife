@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LycodeLife | Automatización de Tareas B2B</title>
+    <title>LycodeLife | Deja de perder dinero en tareas manuales</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -24,8 +24,9 @@
                             50: '#eff6ff',
                             100: '#dbeafe',
                             500: '#3b82f6',
-                            600: '#2563eb',
+                            600: '#2563eb', // Core blue
                             700: '#1d4ed8',
+                            900: '#0a192f', // Darker, more corporate blue for B2B
                             dark: '#0f172a',
                             text: '#475569',
                             light: '#f8fafc',
@@ -33,6 +34,7 @@
                     },
                     boxShadow: {
                         'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                        'glow': '0 0 20px rgba(37, 99, 235, 0.5)',
                     }
                 }
             }
@@ -63,57 +65,57 @@
         }
 
         .text-gradient {
-            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+            background: linear-gradient(135deg, #2563eb 0%, #1e3a8a 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .page-view {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
-        .page-view.active {
-            display: block;
-            opacity: 1;
-        }
-
         .reveal {
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(30px);
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
 
-        .video-wrapper {
-            width: 100%;
-            max-width: 320px;
-            margin: 0 auto;
-            border-radius: 20px;
-            overflow: hidden;
-            background: #f1f5f9;
-            border: 8px solid #ffffff;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-            position: relative;
+        /* En B2B, los botones deben verse clickeables y premium */
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2), 0 2px 4px -1px rgba(37, 99, 235, 0.1);
         }
-        .video-wrapper::before {
-            content: '';
-            display: block;
-            padding-top: 177.77%;
-        }
-        .video-wrapper iframe, .video-wrapper blockquote {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            border: none;
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3), 0 4px 6px -2px rgba(37, 99, 235, 0.15);
         }
 
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f8fafc; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        
+        /* Estilo para los placeholders de imágenes del portafolio */
+        .portfolio-image-container {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #e2e8f0;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+            color: #64748b;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-align: center;
+            padding: 1rem;
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-brand-600 selection:text-white flex flex-col min-h-screen">
@@ -121,252 +123,324 @@
     <!-- NAVEGACIÓN -->
     <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-nav" id="main-nav">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <button onclick="router.navigate('home')" class="flex items-center space-x-2 outline-none">
-                <div class="bg-brand-600 text-white w-8 h-8 rounded-lg flex items-center justify-center font-bold text-lg">L</div>
-                <span class="text-xl font-extrabold tracking-tight text-brand-dark">Lycode<span class="text-brand-600">Life</span></span>
-            </button>
+            <a href="#inicio" class="flex items-center space-x-2 outline-none">
+                <div class="bg-brand-900 text-white w-8 h-8 rounded-lg flex items-center justify-center font-bold text-lg">L</div>
+                <span class="text-xl font-extrabold tracking-tight text-brand-900">Lycode<span class="text-brand-600">Life</span></span>
+            </a>
 
             <div class="hidden md:flex items-center space-x-8">
-                <button onclick="router.navigate('home')" class="nav-link text-sm font-semibold text-brand-text hover:text-brand-600">Inicio</button>
-                <button onclick="router.navigate('proyectos')" class="nav-link text-sm font-semibold text-brand-text hover:text-brand-600">Soluciones</button>
-                <button onclick="router.navigate('nosotros')" class="nav-link text-sm font-semibold text-brand-text hover:text-brand-600">Cómo Trabajamos</button>
-                <button onclick="toggleContactModal()" class="px-5 py-2.5 bg-brand-dark text-white rounded-lg font-semibold text-sm hover:bg-brand-600 transition-colors">Contactame por correo</button>
+                <a href="#problema" class="text-sm font-semibold text-brand-text hover:text-brand-600 transition-colors">El Problema</a>
+                <a href="#soluciones" class="text-sm font-semibold text-brand-text hover:text-brand-600 transition-colors">Casos de Éxito</a>
+                <a href="#proceso" class="text-sm font-semibold text-brand-text hover:text-brand-600 transition-colors">Cómo Trabajo</a>
+                <button onclick="toggleContactModal()" class="px-5 py-2.5 btn-primary rounded-lg font-bold text-sm">Cotizar Automatización</button>
             </div>
 
-            <button id="mobile-menu-btn" class="md:hidden text-brand-dark p-2">
+            <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="md:hidden text-brand-dark p-2">
                 <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </div>
 
         <div id="mobile-menu" class="hidden absolute top-20 left-0 w-full bg-white border-b border-slate-200 py-4 px-6 flex flex-col space-y-4 shadow-xl">
-            <button onclick="router.navigate('home'); toggleMobileMenu()" class="text-left font-semibold text-brand-text">Inicio</button>
-            <button onclick="router.navigate('proyectos'); toggleMobileMenu()" class="text-left font-semibold text-brand-text">Soluciones</button>
-            <button onclick="router.navigate('nosotros'); toggleMobileMenu()" class="text-left font-semibold text-brand-text">Cómo Trabajamos</button>
-            <button onclick="toggleContactModal(); toggleMobileMenu()" class="w-full text-center px-5 py-3 bg-brand-600 text-white rounded-lg font-semibold mt-2">Contactame por correo</button>
+            <a href="#problema" onclick="toggleMobileMenu()" class="text-left font-semibold text-brand-text">El Problema</a>
+            <a href="#soluciones" onclick="toggleMobileMenu()" class="text-left font-semibold text-brand-text">Casos de Éxito</a>
+            <a href="#proceso" onclick="toggleMobileMenu()" class="text-left font-semibold text-brand-text">Cómo Trabajo</a>
+            <button onclick="toggleContactModal(); toggleMobileMenu()" class="w-full text-center px-5 py-3 btn-primary rounded-lg font-bold mt-2">Cotizar Automatización</button>
         </div>
     </nav>
 
-    <!-- WhatsApp Flotante -->
-    <a href="https://wa.me/message/TU_NUMERO_AQUI" target="_blank" class="fixed bottom-6 right-6 z-[100] w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center text-white shadow-lg hover:scale-110 transition-transform">
-        <i data-lucide="message-circle" class="w-7 h-7"></i>
+    <!-- WhatsApp Flotante (Cambiado a un Call to Action más B2B) -->
+    <a href="https://wa.me/message/TU_NUMERO_AQUI" target="_blank" class="fixed bottom-6 right-6 z-[100] bg-[#25D366] rounded-full p-4 flex items-center justify-center text-white shadow-xl hover:scale-105 transition-all group">
+        <i data-lucide="message-circle" class="w-6 h-6"></i>
+        <span class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 ease-in-out font-semibold text-sm pl-0 group-hover:pl-2">Escríbeme directo</span>
     </a>
 
-    <!-- MAIN -->
-    <main id="app-root" class="flex-grow relative">
+    <!-- MAIN (Single Page Scroll) -->
+    <main class="flex-grow relative pt-20">
 
         <!-- ==========================================
-             INICIO
+             HERO SECTION (Focado en ROI y Dolor)
         =========================================== -->
-        <div id="view-home" class="page-view active pt-20">
-            
-            <section class="py-24 px-6">
-                <div class="max-w-4xl mx-auto text-center">
-                    <h1 class="text-5xl md:text-6xl font-extrabold text-brand-dark leading-[1.1] mb-6 reveal">
-                        Soluciones personalizadas <span class="text-gradient">rapidas</span> para tu empresa.
-                    </h1>
-                    
-                    <p class="text-xl text-brand-text mb-10 reveal" style="transition-delay: 100ms;">
-                        Si tu equipo pasa horas copiando datos, limpiando Excels o enviando mensajes uno a uno, estás perdiendo dinero. Desarrollo scripts que hacen ese trabajo en segundos.
-                    </p>
-                    
-                    <div class="flex flex-col sm:flex-row justify-center gap-4 reveal" style="transition-delay: 200ms;">
-                        <button onclick="toggleContactModal()" class="px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold transition-all shadow-lg">
-                            Contactanos por correo
-                        </button>
-                        <button onclick="router.navigate('proyectos')" class="px-8 py-4 bg-white text-brand-dark border border-slate-200 hover:border-slate-300 rounded-xl font-bold transition-all">
-                            Ver Herramientas
-                        </button>
-                    </div>
+        <section id="inicio" class="py-20 md:py-32 px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="inline-block bg-blue-50 text-brand-600 font-bold px-4 py-1.5 rounded-full text-sm mb-6 reveal">
+                    Para equipos de operaciones, ventas y finanzas
                 </div>
-            </section>
-
-            <!-- Problemas directos -->
-            <section class="py-20 px-6 bg-white border-y border-slate-200">
-                <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
-                    <div class="p-6 reveal">
-                        <i data-lucide="file-spreadsheet" class="w-8 h-8 text-brand-600 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-2">Adiós al Data Entry</h3>
-                        <p class="text-slate-600">Extraigo datos de PDFs, webs o correos y los organizo en tus bases de datos automáticamente. Cero errores de tipeo.</p>
-                    </div>
-                    <div class="p-6 reveal" style="transition-delay: 100ms;">
-                        <i data-lucide="message-square" class="w-8 h-8 text-brand-600 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-2">Notificaciones Masivas</h3>
-                        <p class="text-slate-600">Sistemas que envían mensajes personalizados a cientos de clientes sin que tengas que estar pegado al teclado.</p>
-                    </div>
-                    <div class="p-6 reveal" style="transition-delay: 200ms;">
-                        <i data-lucide="zap" class="w-8 h-8 text-brand-600 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-2">Scripts a Medida</h3>
-                        <p class="text-slate-600">Herramientas nativas creadas para tu proceso específico. No importa cuán raro sea tu Excel, se puede automatizar.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="py-24 px-6 bg-brand-dark text-center">
-                <div class="max-w-3xl mx-auto reveal">
-                    <h2 class="text-4xl font-extrabold text-white mb-6">Deja que el código trabaje por ti.</h2>
-                    <p class="text-slate-300 text-lg mb-8">Cuéntame qué tarea repetitiva hace tu equipo todos los días. Te diré si se puede automatizar y cuánto te ahorrará.</p>
-                    <button onclick="toggleContactModal()" class="px-8 py-4 bg-brand-600 hover:bg-brand-500 text-white rounded-xl font-bold text-lg transition-all">
-                        Cuéntame tu problema
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-brand-900 leading-[1.1] mb-6 reveal tracking-tight" style="transition-delay: 100ms;">
+                    Deja de perder dinero en <span class="text-gradient">tareas manuales.</span>
+                </h1>
+                
+                <p class="text-xl text-slate-600 mb-10 reveal max-w-2xl mx-auto leading-relaxed" style="transition-delay: 200ms;">
+                    Si tu equipo pasa más de 2 horas al día copiando datos, limpiando Excels o enviando mensajes repetitivos, estás perdiendo miles de dólares al año. Desarrollo scripts a medida que hacen ese trabajo en segundos.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row justify-center gap-4 reveal" style="transition-delay: 300ms;">
+                    <button onclick="toggleContactModal()" class="px-8 py-4 btn-primary rounded-xl font-bold text-lg flex items-center justify-center gap-2">
+                        Cotizar mi proyecto <i data-lucide="arrow-right" class="w-5 h-5"></i>
                     </button>
-                </div>
-            </section>
-        </div>
-
-        <!-- ==========================================
-             SOLUCIONES (PROYECTOS)
-        =========================================== -->
-        <div id="view-proyectos" class="page-view pt-20">
-            
-            <div class="bg-slate-50 border-b border-slate-200 py-16 px-6 text-center">
-                <div class="max-w-3xl mx-auto reveal">
-                    <h1 class="text-4xl font-extrabold text-brand-dark mb-4">Casos de Uso Reales</h1>
-                    <p class="text-lg text-slate-600">Estos son algunos ejemplos de tareas manuales que hemos eliminado por completo usando código.</p>
-                </div>
-            </div>
-
-            <div class="max-w-6xl mx-auto px-6 py-20 space-y-24">
-
-                <!-- PROYECTO 1 -->
-                <div class="grid lg:grid-cols-2 gap-12 items-center reveal">
-                    <div>
-                        <h2 class="text-3xl font-bold text-brand-dark mb-4">WhatsApp Automatizado</h2>
-                        <p class="text-slate-600 mb-6">
-                            Un script para enviar mensajes, imágenes y documentos en secuencia a listas grandes de contactos. Ideal para cobranzas, avisos o ventas.
-                        </p>
-                        <ul class="space-y-3 mb-6 text-sm text-slate-700">
-                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-brand-600 mr-2"></i> Personaliza cada mensaje con el nombre del cliente.</li>
-                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-brand-600 mr-2"></i> Envía texto, pausas y luego un PDF de forma automática.</li>
-                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-brand-600 mr-2"></i> Te ahorra horas de estar copiando y pegando en el celular.</li>
-                        </ul>
-                    </div>
-                    <div class="video-wrapper tiktok-container" data-video-id="7604655676429700372"></div>
+                    <a href="#soluciones" class="px-8 py-4 bg-white text-brand-900 border-2 border-slate-200 hover:border-brand-600 rounded-xl font-bold transition-all text-lg flex items-center justify-center">
+                        Ver cómo funciona
+                    </a>
                 </div>
 
-                <hr class="border-slate-100">
-
-                <!-- PROYECTO 2 -->
-                <div class="grid lg:grid-cols-2 gap-12 items-center reveal">
-                    <div class="order-2 lg:order-1 video-wrapper tiktok-container" data-video-id="7602347695189134612"></div>
-                    <div class="order-1 lg:order-2">
-                        <h2 class="text-3xl font-bold text-brand-dark mb-4">PriceClean (Inventarios)</h2>
-                        <p class="text-slate-600 mb-6">
-                            Los proveedores mandan listas de precios desastrosas. Este código las limpia, calcula tu margen y te entrega un archivo listo para subir a tu sistema.
-                        </p>
-                        <ul class="space-y-3 mb-6 text-sm text-slate-700">
-                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-brand-600 mr-2"></i> Elimina duplicados y filas vacías al instante.</li>
-                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-brand-600 mr-2"></i> Calcula precios finales sumando tu margen e impuestos.</li>
-                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-brand-600 mr-2"></i> De horas de trabajo en Excel a solo 3 segundos.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <hr class="border-slate-100">
-
-                <!-- PROYECTO 3 -->
-                <div class="grid lg:grid-cols-2 gap-12 items-center reveal">
-                    <div>
-                        <h2 class="text-3xl font-bold text-brand-dark mb-4">SmartExtract (Facturas PDF)</h2>
-                        <p class="text-slate-600 mb-6">
-                            Para contabilidad. Un script que lee cientos de facturas en PDF a la vez, busca el RUC, fecha y totales, y lo exporta todo a una tabla.
-                        </p>
-                        <ul class="space-y-3 mb-6 text-sm text-slate-700">
-                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-brand-600 mr-2"></i> Cero errores humanos al transcribir montos.</li>
-                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-brand-600 mr-2"></i> Procesa carpetas enteras con un clic.</li>
-                        </ul>
-                    </div>
-                    <div class="video-wrapper tiktok-container" data-video-id="7601620544298994965"></div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- ==========================================
-             CÓMO TRABAJAMOS (NOSOTROS)
-        =========================================== -->
-        <div id="view-nosotros" class="page-view pt-20">
-            <div class="max-w-3xl mx-auto px-6 py-24">
-                <div class="text-center mb-16 reveal">
-                    <h1 class="text-4xl font-extrabold text-brand-dark mb-6">Sin agencias. Sin burocracia.</h1>
-                    <p class="text-xl text-slate-600">Trato directo con el desarrollador para resolver tu problema rápido.</p>
-                </div>
-
-                <div class="space-y-12 reveal">
-                    <div class="flex flex-col md:flex-row gap-6 items-start">
-                        <div class="w-12 h-12 bg-blue-50 text-brand-600 rounded-xl flex items-center justify-center font-bold text-xl shrink-0">1</div>
+                <!-- Trust Indicators B2B -->
+                <div class="mt-16 pt-8 border-t border-slate-200 reveal" style="transition-delay: 400ms;">
+                    <p class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-6">Resultados típicos de mis clientes</p>
+                    <div class="flex flex-wrap justify-center gap-8 md:gap-16 text-center">
                         <div>
-                            <h3 class="text-xl font-bold text-brand-dark mb-2">Me cuentas el problema</h3>
-                            <p class="text-slate-600">Me muestras esa tarea repetitiva que tienes que hacer todos los días (un Excel tedioso, correos repetitivos, cruce de datos). Analizo si es automatizable.</p>
+                            <div class="text-3xl font-extrabold text-brand-900">95%</div>
+                            <div class="text-sm text-slate-500 font-medium">Tiempo Ahorrado</div>
                         </div>
+                        <div>
+                            <div class="text-3xl font-extrabold text-brand-900">0</div>
+                            <div class="text-sm text-slate-500 font-medium">Errores Humanos</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-extrabold text-brand-900">24/7</div>
+                            <div class="text-sm text-slate-500 font-medium">Operación Continua</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             EL PROBLEMA (Puntos de Dolor)
+        =========================================== -->
+        <section id="problema" class="py-24 px-6 bg-brand-900 text-white relative overflow-hidden">
+            <!-- Background accent -->
+            <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-brand-600 rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
+            
+            <div class="max-w-6xl mx-auto relative z-10">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-3xl md:text-4xl font-extrabold mb-4">El talento humano es caro. ¿Por qué lo usas para ser un robot?</h2>
+                    <p class="text-slate-400 text-lg max-w-2xl mx-auto">Automatizo los cuellos de botella que están frenando el crecimiento de tu empresa.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-slate-800/50 border border-slate-700 p-8 rounded-2xl reveal hover:bg-slate-800 transition-colors">
+                        <div class="w-14 h-14 bg-brand-600/20 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="file-spreadsheet" class="w-7 h-7 text-brand-400"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Extracción de Datos (Data Entry)</h3>
+                        <p class="text-slate-400">Extraigo datos de cientos de PDFs, webs o correos simultáneamente y los inyecto en tu CRM o base de datos. Sin errores de tipeo.</p>
+                    </div>
+                    <div class="bg-slate-800/50 border border-slate-700 p-8 rounded-2xl reveal hover:bg-slate-800 transition-colors" style="transition-delay: 100ms;">
+                        <div class="w-14 h-14 bg-brand-600/20 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="message-square" class="w-7 h-7 text-brand-400"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Notificaciones Masivas Automáticas</h3>
+                        <p class="text-slate-400">Sistemas que envían mensajes de WhatsApp o correos 100% personalizados a tu base de clientes (cobranzas, reportes, avisos) sin intervención manual.</p>
+                    </div>
+                    <div class="bg-slate-800/50 border border-slate-700 p-8 rounded-2xl reveal hover:bg-slate-800 transition-colors" style="transition-delay: 200ms;">
+                        <div class="w-14 h-14 bg-brand-600/20 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="code-2" class="w-7 h-7 text-brand-400"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Integraciones a Medida (APIs)</h3>
+                        <p class="text-slate-400">Hago que tus softwares se hablen entre sí. Si tu ERP no se conecta con tu e-commerce, yo construyo el puente invisible que los une.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             SOLUCIONES (Casos de Éxito / Portafolio)
+        =========================================== -->
+        <section id="soluciones" class="py-24 px-6 bg-slate-50 border-b border-slate-200">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-20 reveal">
+                    <h2 class="text-4xl font-extrabold text-brand-900 mb-4">Soluciones Reales. Resultados Reales.</h2>
+                    <p class="text-lg text-slate-600">Herramientas nativas creadas para procesos específicos que eliminaron por completo el trabajo manual.</p>
+                </div>
+
+                <div class="space-y-32">
+                    <!-- PROYECTO 1 -->
+                    <div class="grid lg:grid-cols-2 gap-12 items-center reveal">
+                        <div class="order-2 lg:order-1">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold mb-4">
+                                <span class="w-2 h-2 rounded-full bg-green-500"></span> Operaciones
+                            </div>
+                            <h3 class="text-3xl font-bold text-brand-900 mb-4">Secuenciador de WhatsApp Empresarial</h3>
+                            <p class="text-slate-600 mb-6 text-lg">
+                                Diseñado para equipos de cobranza y ventas. Permite enviar secuencias de texto, imágenes y documentos PDF a bases de datos masivas con personalización dinámica.
+                            </p>
+                            <div class="bg-white p-6 rounded-xl border border-slate-200 mb-6 shadow-sm">
+                                <h4 class="font-bold text-brand-900 mb-2">El Retorno de Inversión (ROI):</h4>
+                                <ul class="space-y-2 text-slate-700">
+                                    <li class="flex items-start gap-2"><i data-lucide="trending-down" class="w-5 h-5 text-green-600 shrink-0 mt-0.5"></i> Reducción de tiempo de envío de 4 horas a 5 minutos.</li>
+                                    <li class="flex items-start gap-2"><i data-lucide="shield" class="w-5 h-5 text-brand-600 shrink-0 mt-0.5"></i> Pausas humanizadas y algoritmos de mitigación para reducir drásticamente el riesgo de bloqueo por Meta.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="order-1 lg:order-2 flex justify-center w-full">
+                            <div class="portfolio-image-container p-0 border-none bg-transparent">
+                                <!-- ALISA TE HABLA: Aquí pones la ruta de tu primera imagen. Súbela a una carpeta 'assets' -->
+                                <img src="assets/whatsapp-bot.png" alt="Dashboard de automatización de WhatsApp" class="w-full h-full object-cover rounded-xl shadow-xl border border-slate-200">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PROYECTO 2 -->
+                    <div class="grid lg:grid-cols-2 gap-12 items-center reveal">
+                        <div class="flex justify-center w-full">
+                            <div class="portfolio-image-container p-0 border-none bg-transparent">
+                                <!-- ALISA TE HABLA: Aquí va la ruta de tu segunda imagen (el Excel) -->
+                                <img src="assets/excel-cleaner.png" alt="Limpieza automatizada de bases de datos" class="w-full h-full object-cover rounded-xl shadow-xl border border-slate-200">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold mb-4">
+                                <span class="w-2 h-2 rounded-full bg-blue-500"></span> Inventario y Finanzas
+                            </div>
+                            <h3 class="text-3xl font-bold text-brand-900 mb-4">PriceClean: Saneamiento de Datos</h3>
+                            <p class="text-slate-600 mb-6 text-lg">
+                                Los proveedores envían formatos de listas de precios desastrosos. Este script estructuriza, limpia, cruza datos y calcula márgenes automáticamente para ERPs.
+                            </p>
+                            <div class="bg-white p-6 rounded-xl border border-slate-200 mb-6 shadow-sm">
+                                <h4 class="font-bold text-brand-900 mb-2">El Retorno de Inversión (ROI):</h4>
+                                <ul class="space-y-2 text-slate-700">
+                                    <li class="flex items-start gap-2"><i data-lucide="zap" class="w-5 h-5 text-yellow-500 shrink-0 mt-0.5"></i> Procesamiento de 10,000 SKUs en 3 segundos.</li>
+                                    <li class="flex items-start gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-brand-600 shrink-0 mt-0.5"></i> Eliminación total de errores de fijación de precios (pricing).</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PROYECTO 3 -->
+                    <div class="grid lg:grid-cols-2 gap-12 items-center reveal">
+                        <div class="order-2 lg:order-1">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-bold mb-4">
+                                <span class="w-2 h-2 rounded-full bg-purple-500"></span> Contabilidad
+                            </div>
+                            <h3 class="text-3xl font-bold text-brand-900 mb-4">SmartExtract: OCR de Facturas</h3>
+                            <p class="text-slate-600 mb-6 text-lg">
+                                Lectura masiva de documentos PDF. El script escanea carpetas enteras de facturas, extrae el RUC, razón social, fecha y totales, y exporta una base de datos limpia.
+                            </p>
+                            <div class="bg-white p-6 rounded-xl border border-slate-200 mb-6 shadow-sm">
+                                <h4 class="font-bold text-brand-900 mb-2">El Retorno de Inversión (ROI):</h4>
+                                <ul class="space-y-2 text-slate-700">
+                                    <li class="flex items-start gap-2"><i data-lucide="clock" class="w-5 h-5 text-brand-600 shrink-0 mt-0.5"></i> Ahorro de +20 horas semanales al equipo contable.</li>
+                                    <li class="flex items-start gap-2"><i data-lucide="folder-check" class="w-5 h-5 text-brand-600 shrink-0 mt-0.5"></i> Estandarización de auditorías internas al 100%.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="order-1 lg:order-2 flex justify-center w-full">
+                            <div class="portfolio-image-container p-0 border-none bg-transparent">
+                                <!-- ALISA TE HABLA: Y aquí va la ruta de tu tercera imagen (Facturas PDF) -->
+                                <img src="assets/facturas-ocr.png" alt="OCR y extracción de datos de facturas" class="w-full h-full object-cover rounded-xl shadow-xl border border-slate-200">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             CÓMO TRABAJO (Proceso B2B)
+        =========================================== -->
+        <section id="proceso" class="py-24 px-6 bg-white">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-4xl font-extrabold text-brand-900 mb-6">Trato directo. Cero burocracia.</h2>
+                    <p class="text-xl text-slate-600">Al trabajar conmigo, no hablas con ejecutivos de cuenta que no saben de código. Hablas directamente con el ingeniero que resolverá tu problema.</p>
+                </div>
+
+                <div class="relative border-l-4 border-slate-200 ml-4 md:ml-8 space-y-12 pb-8">
+                    <div class="relative pl-8 md:pl-12 reveal">
+                        <div class="absolute -left-[22px] top-1 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold shadow-lg shadow-brand-500/30">1</div>
+                        <h3 class="text-2xl font-bold text-brand-900 mb-2">Auditoría del Proceso</h3>
+                        <p class="text-slate-600 text-lg">Nos reunimos (o me envías un video) mostrando la tarea manual exacta que tu equipo hace. Evalúo la viabilidad técnica y te digo exactamente cuánto tiempo te puedo ahorrar.</p>
                     </div>
                     
-                    <div class="flex flex-col md:flex-row gap-6 items-start">
-                        <div class="w-12 h-12 bg-blue-50 text-brand-600 rounded-xl flex items-center justify-center font-bold text-xl shrink-0">2</div>
-                        <div>
-                            <h3 class="text-xl font-bold text-brand-dark mb-2">Desarrollo el Script</h3>
-                            <p class="text-slate-600">Escribo el código (generalmente en Python) específico para tu proceso. Nada de plantillas genéricas, el código se adapta a cómo funciona tu empresa.</p>
-                        </div>
+                    <div class="relative pl-8 md:pl-12 reveal">
+                        <div class="absolute -left-[22px] top-1 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold shadow-lg shadow-brand-500/30">2</div>
+                        <h3 class="text-2xl font-bold text-brand-900 mb-2">Desarrollo del Script</h3>
+                        <p class="text-slate-600 text-lg">Escribo el código (Python, Node, o integraciones API) a la medida de tu infraestructura actual. No te obligo a cambiar de software, adapto mi código a lo que ya usas (Excel, SAP, Salesforce, etc.).</p>
                     </div>
 
-                    <div class="flex flex-col md:flex-row gap-6 items-start">
-                        <div class="w-12 h-12 bg-blue-50 text-brand-600 rounded-xl flex items-center justify-center font-bold text-xl shrink-0">3</div>
-                        <div>
-                            <h3 class="text-xl font-bold text-brand-dark mb-2">Implementación y Tiempo Libre</h3>
-                            <p class="text-slate-600">Te entrego la herramienta funcionando. Lo que antes te tomaba 3 horas, ahora lo haces con un doble clic. Fin del problema.</p>
-                        </div>
+                    <div class="relative pl-8 md:pl-12 reveal">
+                        <div class="absolute -left-[22px] top-1 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold shadow-lg shadow-brand-500/30">3</div>
+                        <h3 class="text-2xl font-bold text-brand-900 mb-2">Implementación y ROI</h3>
+                        <p class="text-slate-600 text-lg">Te entrego un ejecutable o configuro el servidor. Te capacito en 15 minutos. Lo que antes tomaba días, ahora requerirá un solo clic.</p>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- ==========================================
+             FINAL CTA
+        =========================================== -->
+        <section class="py-24 px-6 bg-brand-900 text-center">
+            <div class="max-w-3xl mx-auto reveal">
+                <h2 class="text-4xl font-extrabold text-white mb-6">¿Listo para dejar de hacer trabajo de robots?</h2>
+                <p class="text-slate-300 text-xl mb-10">Cuéntame tu peor cuello de botella. Si no puedo automatizarlo, te lo diré de inmediato. Si puedo, prepararé una cotización para tu negocio.</p>
+                <button onclick="toggleContactModal()" class="px-10 py-5 btn-primary text-white rounded-xl font-bold text-xl transition-all w-full md:w-auto shadow-[0_0_30px_rgba(37,99,235,0.4)]">
+                    Solicitar Cotización Técnica
+                </button>
+            </div>
+        </section>
 
     </main>
 
     <!-- FOOTER -->
-    <footer class="bg-white border-t border-slate-200 py-10 mt-auto">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-sm text-slate-500">
-            <div class="font-bold text-brand-dark mb-4 md:mb-0">LycodeLife</div>
+    <footer class="bg-slate-900 border-t border-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-slate-400">
+            <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                <div class="bg-slate-800 text-white w-8 h-8 rounded flex items-center justify-center font-bold">L</div>
+                <span class="font-bold text-white text-lg">LycodeLife</span>
+                <span class="text-sm ml-4 border-l border-slate-700 pl-4">B2B Automation Engineering</span>
+            </div>
             <div class="flex space-x-6">
-                <a href="https://www.tiktok.com/@lycodelife" target="_blank" class="hover:text-brand-600 font-semibold">TikTok</a>
-                <a href="https://www.instagram.com/lycodelife" target="_blank" class="hover:text-brand-600 font-semibold">Instagram</a>
+                <a href="https://www.tiktok.com/@lycodelife" target="_blank" class="hover:text-white font-medium transition-colors">TikTok</a>
+                <a href="https://www.instagram.com/lycodelife" target="_blank" class="hover:text-white font-medium transition-colors">Instagram</a>
+                <a href="https://www.linkedin.com/in/tu-perfil" target="_blank" class="hover:text-white font-medium transition-colors">LinkedIn</a>
             </div>
         </div>
     </footer>
 
-    <!-- MODAL DE CONTACTO -->
+    <!-- MODAL DE CONTACTO B2B -->
     <div id="contact-modal" class="fixed inset-0 z-[110] hidden flex items-center justify-center px-4">
-        <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onclick="toggleContactModal()"></div>
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="toggleContactModal()"></div>
         
-        <div class="bg-white w-full max-w-lg p-8 rounded-2xl relative z-10 transform transition-all duration-300 scale-95 opacity-0 shadow-2xl" id="contact-modal-content">
-            <button onclick="toggleContactModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 bg-slate-50 hover:bg-slate-100 rounded-full p-2">
+        <div class="bg-white w-full max-w-lg p-8 md:p-10 rounded-2xl relative z-10 transform transition-all duration-300 scale-95 opacity-0 shadow-2xl" id="contact-modal-content">
+            <button onclick="toggleContactModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 rounded-full p-2 transition-colors">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
             
-            <div class="mb-6">
-                <h3 class="text-2xl font-bold text-brand-dark mb-2">Cuéntame tu problema</h3>
-                <p class="text-slate-500 text-sm">¿Qué tarea manual te quita más tiempo en tu día a día?</p>
+            <div class="mb-8">
+                <h3 class="text-2xl font-extrabold text-brand-900 mb-2">Describeme tu cuello de botella</h3>
+                <p class="text-slate-500 text-sm">Completa esto rápido y te diré si es técnica y financieramente viable automatizarlo.</p>
             </div>
             
-            <form action="https://formsubmit.co/lycodelifework@gmail.com" method="POST" class="space-y-4">
-                <input type="hidden" name="_subject" value="Nuevo Lead B2B - LycodeLife">
+            <form action="https://formsubmit.co/lycodelifework@gmail.com" method="POST" class="space-y-5">
+                <input type="hidden" name="_subject" value="🚀 NUEVO LEAD B2B - LycodeLife">
+                <input type="hidden" name="_template" value="table">
                 <input type="hidden" name="_captcha" value="false">
                 
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nombre</label>
-                    <input type="text" name="name" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-brand-dark focus:outline-none focus:border-brand-600 text-sm">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5 tracking-wide">Tu Nombre</label>
+                        <input type="text" name="name" required class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 text-brand-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5 tracking-wide">Empresa</label>
+                        <input type="text" name="company" required class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 text-brand-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all text-sm">
+                    </div>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Empresa / Negocio</label>
-                    <input type="text" name="company" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-brand-dark focus:outline-none focus:border-brand-600 text-sm">
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5 tracking-wide">Email Corporativo</label>
+                    <input type="email" name="email" required class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 text-brand-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all text-sm">
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">¿Qué quieres automatizar?</label>
-                    <textarea name="message" required rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-brand-dark focus:outline-none focus:border-brand-600 text-sm resize-none" placeholder="Ej. Paso 3 horas al día copiando datos de PDF a Excel..."></textarea>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5 tracking-wide">¿Cuál es el proceso manual que quieres eliminar?</label>
+                    <textarea name="message" required rows="4" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-3 text-brand-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all text-sm resize-none" placeholder="Ej: Mi equipo pasa 3 horas al día copiando datos de PDFs a un Excel maestro..."></textarea>
                 </div>
                 
-                <button type="submit" class="w-full py-3 bg-brand-600 text-white rounded-lg font-bold transition-all hover:bg-brand-700 mt-2">
-                    Enviar mensaje
+                <button type="submit" class="w-full py-4 btn-primary rounded-lg font-bold transition-all text-lg mt-4 flex justify-center items-center gap-2">
+                    Enviar para Evaluación <i data-lucide="send" class="w-4 h-4"></i>
                 </button>
+                <p class="text-xs text-center text-slate-400 mt-3"><i data-lucide="lock" class="w-3 h-3 inline pb-0.5"></i> Tus datos están seguros. 100% confidencial.</p>
             </form>
         </div>
     </div>
@@ -375,123 +449,66 @@
     <script>
         lucide.createIcons();
 
-        // SPA Router
-        const router = {
-            currentView: 'home',
-            navigate: function(viewId) {
-                if(this.currentView === viewId) return;
+        // Elimine tu router complejo. El SCROLL es el rey en ventas B2B.
 
-                const currentElement = document.getElementById(`view-${this.currentView}`);
-                if(currentElement) {
-                    currentElement.classList.remove('active');
-                    setTimeout(() => {
-                        this.showView(viewId);
-                    }, 300); 
-                } else {
-                    this.showView(viewId);
-                }
-
-                this.currentView = viewId;
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                updateNavVisuals(viewId);
-            },
-            showView: function(viewId) {
-                const newElement = document.getElementById(`view-${viewId}`);
-                if(newElement) {
-                    newElement.classList.add('active');
-                    setTimeout(() => triggerReveals(), 50);
-                    if(viewId === 'proyectos') loadTikTokVideos();
-                }
-            }
-        };
-
-        function updateNavVisuals(activeId) {
-            document.querySelectorAll('.nav-link').forEach(link => {
-                if(link.textContent.toLowerCase().includes(activeId === 'home' ? 'inicio' : activeId === 'proyectos' ? 'soluciones' : 'trabajamos')) {
-                    link.classList.add('text-brand-600');
-                    link.classList.remove('text-brand-text');
-                } else {
-                    link.classList.remove('text-brand-600');
-                    link.classList.add('text-brand-text');
-                }
-            });
-        }
-
-        // Mobile Menu
+        // Mobile Menu Toggle
         const mobileMenu = document.getElementById('mobile-menu');
         function toggleMobileMenu() {
             mobileMenu.classList.toggle('hidden');
         }
 
-        // Modal
+        // Modal Logic con animaciones suaves
         function toggleContactModal() {
-            const modal = document.getElementById('contact-modal');
+            const modal = document.getElementById('contact-contact-modal') || document.getElementById('contact-modal');
             const content = document.getElementById('contact-modal-content');
             
             if (modal.classList.contains('hidden')) {
                 modal.classList.remove('hidden');
-                void modal.offsetWidth; 
-                content.classList.remove('scale-95', 'opacity-0');
-                content.classList.add('scale-100', 'opacity-100');
+                document.body.style.overflow = 'hidden'; // Evitar scroll de fondo
+                // Pequeño delay para la animación
+                setTimeout(() => {
+                    content.classList.remove('scale-95', 'opacity-0');
+                    content.classList.add('scale-100', 'opacity-100');
+                }, 10);
             } else {
                 content.classList.remove('scale-100', 'opacity-100');
                 content.classList.add('scale-95', 'opacity-0');
-                setTimeout(() => modal.classList.add('hidden'), 300);
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    document.body.style.overflow = 'auto'; // Restaurar scroll
+                }, 300);
             }
         }
 
-        // Reveals
-        function triggerReveals() {
-            const reveals = document.querySelectorAll('.page-view.active .reveal');
+        // Intersection Observer para las animaciones Reveal
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('active');
-                        observer.unobserve(entry.target);
+                        // Opcional: Descomentar si solo quieres que se anime una vez
+                        // observer.unobserve(entry.target); 
                     }
                 });
-            }, { threshold: 0.1 });
+            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
             reveals.forEach(el => observer.observe(el));
-        }
-
-        // TikToks
-        let tiktokLoaded = false;
-        function loadTikTokVideos() {
-            if (tiktokLoaded) return;
-            const containers = document.querySelectorAll('.tiktok-container');
-            containers.forEach(container => {
-                const videoId = container.getAttribute('data-video-id');
-                container.innerHTML = `
-                    <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@lycodelife/video/${videoId}" data-video-id="${videoId}">
-                        <section><a target="_blank" href="https://www.tiktok.com/@lycodelife">@lycodelife</a></section>
-                    </blockquote>
-                `;
-            });
-
-            if (!document.getElementById('tiktok-script')) {
-                const script = document.createElement('script');
-                script.id = 'tiktok-script';
-                script.src = 'https://www.tiktok.com/embed.js';
-                script.async = true;
-                document.body.appendChild(script);
-            } else if(typeof tiktokEmbed !== 'undefined' && tiktokEmbed.lib) {
-                 tiktokEmbed.lib.render();
-            }
-            tiktokLoaded = true;
-        }
-
-        // Init
-        document.addEventListener('DOMContentLoaded', () => {
-            updateNavVisuals('home');
-            triggerReveals();
             
-            window.addEventListener('scroll', () => {
-                const nav = document.getElementById('main-nav');
-                if(window.scrollY > 20) nav.classList.add('scrolled');
-                else nav.classList.remove('scrolled');
-            });
+            // Ya no cargamos TikToks, usamos imágenes estáticas para mayor profesionalismo B2B
         });
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('main-nav');
+            if(window.scrollY > 20) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+        
+        // (La función loadTikTokVideos ha sido eliminada por completo)
     </script>
 </body>
 </html>
