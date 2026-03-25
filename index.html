@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>LycodeLife | Deja de perder dinero en tareas manuales</title>
     
+    <!-- Favicon (Icono de la página) -->
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -104,15 +107,21 @@
     <!-- NAVEGACIÓN -->
     <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-nav" id="main-nav">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="#inicio" class="flex items-center space-x-2 outline-none">
-                <div class="bg-brand-900 text-white w-8 h-8 rounded-lg flex items-center justify-center font-bold text-lg">L</div>
-                <span class="text-xl font-extrabold tracking-tight text-brand-900">Lycode<span class="text-brand-600">Life</span></span>
+            
+            <!-- LOGO EN IMAGEN -->
+            <a href="#inicio" class="flex items-center outline-none">
+                <!-- Se asume que guardaste tu imagen en la carpeta assets como 'logo.png' -->
+                <img src="assets/logo.png" alt="LycodeLife Logo" class="h-8 w-auto hover:opacity-90 transition-opacity">
             </a>
 
             <div class="hidden md:flex items-center space-x-8">
                 <a href="#problema" class="text-sm font-semibold text-brand-text hover:text-brand-600 transition-colors">El Problema</a>
                 <a href="#soluciones" class="text-sm font-semibold text-brand-text hover:text-brand-600 transition-colors">Casos de Éxito</a>
                 <a href="#proceso" class="text-sm font-semibold text-brand-text hover:text-brand-600 transition-colors">Cómo Trabajo</a>
+                
+                <!-- NUEVO BOTÓN: Lyra Lazuli Life -->
+                <a href="#" class="px-5 py-2.5 bg-brand-50 text-brand-600 border border-brand-200 hover:bg-brand-100 rounded-lg font-bold text-sm transition-colors">Lyra Lazuli Life</a>
+                
                 <button onclick="toggleContactModal()" class="px-5 py-2.5 btn-primary rounded-lg font-bold text-sm">Cotizar Automatización</button>
             </div>
 
@@ -125,6 +134,10 @@
             <a href="#problema" onclick="toggleMobileMenu()" class="text-left font-semibold text-brand-text">El Problema</a>
             <a href="#soluciones" onclick="toggleMobileMenu()" class="text-left font-semibold text-brand-text">Casos de Éxito</a>
             <a href="#proceso" onclick="toggleMobileMenu()" class="text-left font-semibold text-brand-text">Cómo Trabajo</a>
+            
+            <!-- NUEVO BOTÓN MÓVIL: Lyra Lazuli Life -->
+            <a href="#" onclick="toggleMobileMenu()" class="w-full text-center px-5 py-3 bg-brand-50 text-brand-600 border border-brand-200 rounded-lg font-bold mt-2 transition-colors">Lyra Lazuli Life</a>
+            
             <button onclick="toggleContactModal(); toggleMobileMenu()" class="w-full text-center px-5 py-3 btn-primary rounded-lg font-bold mt-2">Cotizar Automatización</button>
         </div>
     </nav>
@@ -253,7 +266,6 @@
                             </div>
                         </div>
                         <div class="order-2 flex justify-center w-full relative group">
-                            <!-- ALISA TE HABLA: Fondo ladeado para dar efecto premium. La imagen ahora usa w-full h-auto y object-contain para no recortarse en celulares. -->
                             <div class="absolute inset-0 bg-green-600 rounded-2xl transform rotate-2 opacity-10 group-hover:rotate-3 transition-transform duration-300"></div>
                             <img src="assets/whatsapp-bot.png" alt="Dashboard de automatización de WhatsApp" class="relative w-full h-auto max-h-[450px] object-contain rounded-xl shadow-2xl border border-slate-200 bg-white p-2 z-10 transition-transform duration-300 group-hover:-translate-y-1">
                         </div>
@@ -262,7 +274,6 @@
                     <!-- PROYECTO 2 -->
                     <div class="grid lg:grid-cols-2 gap-12 items-center reveal">
                         <div class="order-2 lg:order-1 flex justify-center w-full relative group">
-                            <!-- ALISA TE HABLA: Igual aquí, object-contain salva la captura de tu Excel. -->
                             <div class="absolute inset-0 bg-blue-600 rounded-2xl transform -rotate-2 opacity-10 group-hover:-rotate-3 transition-transform duration-300"></div>
                             <img src="assets/excel-cleaner.png" alt="Limpieza automatizada de bases de datos" class="relative w-full h-auto max-h-[450px] object-contain rounded-xl shadow-2xl border border-slate-200 bg-white p-2 z-10 transition-transform duration-300 group-hover:-translate-y-1">
                         </div>
@@ -303,7 +314,6 @@
                             </div>
                         </div>
                         <div class="order-2 flex justify-center w-full relative group">
-                            <!-- ALISA TE HABLA: Ya conecté la ruta de tu OCR de facturas. -->
                             <div class="absolute inset-0 bg-purple-600 rounded-2xl transform rotate-2 opacity-10 group-hover:rotate-3 transition-transform duration-300"></div>
                             <img src="assets/facturas-ocr.png" alt="OCR y extracción de datos de facturas" class="relative w-full h-auto max-h-[450px] object-contain rounded-xl shadow-2xl border border-slate-200 bg-white p-2 z-10 transition-transform duration-300 group-hover:-translate-y-1">
                         </div>
@@ -427,8 +437,6 @@
     <script>
         lucide.createIcons();
 
-        // Elimine tu router complejo. El SCROLL es el rey en ventas B2B.
-
         // Mobile Menu Toggle
         const mobileMenu = document.getElementById('mobile-menu');
         function toggleMobileMenu() {
@@ -437,7 +445,7 @@
 
         // Modal Logic con animaciones suaves
         function toggleContactModal() {
-            const modal = document.getElementById('contact-contact-modal') || document.getElementById('contact-modal');
+            const modal = document.getElementById('contact-modal');
             const content = document.getElementById('contact-modal-content');
             
             if (modal.classList.contains('hidden')) {
@@ -465,15 +473,11 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('active');
-                        // Opcional: Descomentar si solo quieres que se anime una vez
-                        // observer.unobserve(entry.target); 
                     }
                 });
             }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
             reveals.forEach(el => observer.observe(el));
-            
-            // Ya no cargamos TikToks, usamos imágenes estáticas para mayor profesionalismo B2B
         });
 
         // Navbar Scroll Effect
@@ -486,7 +490,6 @@
             }
         });
         
-        // (La función loadTikTokVideos ha sido eliminada por completo)
     </script>
 </body>
 </html>
