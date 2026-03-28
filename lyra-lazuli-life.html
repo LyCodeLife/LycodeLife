@@ -84,6 +84,7 @@
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <!-- LOGO -->
             <a href="index.html" class="flex items-center outline-none group">
+                <!-- Se eliminó el onerror para que no muestre la lupa, solo tu logo -->
                 <img src="assets/favicon.png" alt="LycodeLife Logo" class="h-8 w-auto opacity-90 group-hover:opacity-100 transition-opacity">
                 <span class="ml-3 font-extrabold text-xl text-brand-900 tracking-tight">Lyra <span class="text-brand-600">Lazuli</span></span>
             </a>
@@ -115,16 +116,17 @@
                     Lyra Lazuli. Organiza tu biblioteca, optimiza el rendimiento de tu equipo con un clic y respalda tu progreso en la nube de forma automática. Diseñado para que simplemente disfrutes.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <button class="px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold text-lg transition-all shadow-lg shadow-brand-500/30 flex items-center justify-center gap-2">
+                    <!-- BOTÓN DE DESCARGA DIRECTA (Usando JS para consultar GitHub API sin cambiar de página) -->
+                    <button id="download-btn" onclick="downloadLatestRelease()" class="px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold text-lg transition-all shadow-lg shadow-brand-500/30 flex items-center justify-center gap-2 w-full sm:w-auto">
                         <i data-lucide="download-cloud" class="w-5 h-5"></i> Descargar Lyra Lazuli
                     </button>
-                    <a href="#caracteristicas" class="px-8 py-4 bg-white text-brand-900 border border-slate-200 hover:border-brand-600 rounded-xl font-bold text-lg transition-all flex items-center justify-center">
+                    <a href="#caracteristicas" class="px-8 py-4 bg-white text-brand-900 border border-slate-200 hover:border-brand-600 rounded-xl font-bold text-lg transition-all flex items-center justify-center w-full sm:w-auto">
                         Descubrir más
                     </a>
                 </div>
             </div>
 
-            <!-- CARACTERÍSTICAS (Diseño en Lista Alternada estilo "Casos de Éxito") -->
+            <!-- CARACTERÍSTICAS (Diseño en Lista Alternada) -->
             <div id="caracteristicas" class="space-y-32 mt-20">
                 
                 <!-- CARACTERÍSTICA 1: Interfaz -->
@@ -147,7 +149,8 @@
                     </div>
                     <div class="order-2 flex justify-center w-full relative group">
                         <div class="absolute inset-0 bg-blue-600 rounded-2xl transform rotate-2 opacity-10 group-hover:rotate-3 transition-transform duration-300"></div>
-                        <img src="assets/lyralazuli/ui-dashboard.png" alt="Interfaz de Lyra Lazuli" class="relative w-full h-auto max-h-[450px] object-contain rounded-xl shadow-2xl border border-slate-200 bg-white p-2 z-10 transition-transform duration-300 group-hover:-translate-y-1">
+                        <!-- IMAGEN CLICKEABLE -->
+                        <img src="assets/lyralazuli/ui-dashboard.png" alt="Interfaz de Lyra Lazuli" class="lightbox-trigger cursor-pointer relative w-full h-auto max-h-[450px] object-contain rounded-xl shadow-2xl border border-slate-200 bg-white p-2 z-10 transition-transform duration-300 group-hover:-translate-y-1 hover:ring-4 hover:ring-brand-500/50" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNDUwIiB2aWV3Qm94PSIwIDAgODAwIDQ1MCIgZmlsbD0ibm9uZSI+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI0NTAiIGZpbGw9IiNFMkU4RjAiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiM2NDc0OEIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiPkltYWdlbiBkZSBJbnRlcmZhejwvdGV4dD48L3N2Zz4='">
                     </div>
                 </div>
 
@@ -155,7 +158,8 @@
                 <div class="grid lg:grid-cols-2 gap-12 items-center reveal">
                     <div class="order-2 lg:order-1 flex justify-center w-full relative group">
                         <div class="absolute inset-0 bg-indigo-600 rounded-2xl transform -rotate-2 opacity-10 group-hover:-rotate-3 transition-transform duration-300"></div>
-                        <img src="assets/lyralazuli/optimizer-chart.png" alt="Gráfico de optimización" class="relative w-full h-auto max-h-[450px] object-contain rounded-xl shadow-2xl border border-slate-200 bg-white p-2 z-10 transition-transform duration-300 group-hover:-translate-y-1">
+                        <!-- IMAGEN CLICKEABLE -->
+                        <img src="assets/lyralazuli/optimizer-chart.png" alt="Gráfico de optimización" class="lightbox-trigger cursor-pointer relative w-full h-auto max-h-[450px] object-contain rounded-xl shadow-2xl border border-slate-200 bg-white p-2 z-10 transition-transform duration-300 group-hover:-translate-y-1 hover:ring-4 hover:ring-indigo-500/50" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNDUwIiB2aWV3Qm94PSIwIDAgODAwIDQ1MCIgZmlsbD0ibm9uZSI+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI0NTAiIGZpbGw9IiNFMkU4RjAiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiM2NDc0OEIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiPkltYWdlbiBkZSBPcHRpbWl6YWNpw7NuPC90ZXh0Pjwvc3ZnPg=='">
                     </div>
                     <div class="order-1 lg:order-2">
                         <div class="inline-flex items-center gap-2 px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-bold mb-4">
@@ -195,7 +199,8 @@
                     </div>
                     <div class="order-2 flex justify-center w-full relative group">
                         <div class="absolute inset-0 bg-green-600 rounded-2xl transform rotate-2 opacity-10 group-hover:rotate-3 transition-transform duration-300"></div>
-                        <img src="assets/lyralazuli/cloud-sync.png" alt="Sincronización en la nube" class="relative w-full h-auto max-h-[450px] object-contain rounded-xl shadow-2xl border border-slate-200 bg-white p-2 z-10 transition-transform duration-300 group-hover:-translate-y-1">
+                        <!-- IMAGEN CLICKEABLE -->
+                        <img src="assets/lyralazuli/cloud-sync.png" alt="Sincronización en la nube" class="lightbox-trigger cursor-pointer relative w-full h-auto max-h-[450px] object-contain rounded-xl shadow-2xl border border-slate-200 bg-white p-2 z-10 transition-transform duration-300 group-hover:-translate-y-1 hover:ring-4 hover:ring-green-500/50" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNDUwIiB2aWV3Qm94PSIwIDAgODAwIDQ1MCIgZmlsbD0ibm9uZSI+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI0NTAiIGZpbGw9IiNFMkU4RjAiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiM2NDc0OEIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiPkltYWdlbiBkZSB0dSBQcm9ncmVzbzwvdGV4dD48L3N2Zz4='">
                     </div>
                 </div>
 
@@ -208,7 +213,6 @@
     <footer class="bg-white border-t border-slate-200 py-8 mt-auto">
         <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-slate-500">
             <div class="flex items-center space-x-2 mb-4 md:mb-0">
-                <img src="assets/logo.png" alt="Logo" class="w-5 h-5 opacity-50 grayscale">
                 <span class="font-bold text-slate-700 text-sm">Lyra Lazuli</span>
                 <span class="text-xs ml-4 border-l border-slate-300 pl-4">Por LycodeLife</span>
             </div>
@@ -218,8 +222,75 @@
         </div>
     </footer>
 
+    <!-- LIGHTBOX (VISOR DE IMÁGENES MODERNO) -->
+    <div id="lightbox" class="fixed inset-0 z-[100] hidden items-center justify-center bg-slate-900/95 backdrop-blur-md opacity-0 transition-opacity duration-300">
+        <!-- Botón Cerrar -->
+        <button id="close-lightbox" class="absolute top-6 right-6 text-white/80 hover:text-white hover:bg-white/20 transition-colors bg-white/10 p-3 rounded-full backdrop-blur-md z-10 focus:outline-none">
+            <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+        <!-- Imagen -->
+        <img id="lightbox-img" src="" alt="Lyra Lazuli Preview" class="max-w-[90vw] max-h-[90vh] object-contain rounded-xl shadow-[0_0_50px_rgba(0,0,0,0.5)] transform scale-95 transition-transform duration-300">
+    </div>
+
     <script>
+        // Inicializar iconos
         lucide.createIcons();
+
+        // ----------------------------------------------------
+        // LÓGICA DE DESCARGA DIRECTA DESDE GITHUB RELEASES
+        // ----------------------------------------------------
+        async function downloadLatestRelease() {
+            const btn = document.getElementById('download-btn');
+            const originalContent = btn.innerHTML;
+            
+            // Cambiar estado a "Cargando"
+            btn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Iniciando descarga...';
+            btn.disabled = true;
+            lucide.createIcons();
+
+            try {
+                // Hacemos una petición a la API de GitHub para obtener los releases
+                // Usamos /releases general porque la Beta se marca como "Pre-release" y /latest la ignoraría
+                const response = await fetch('https://api.github.com/repos/ShordyEA/Lyra-Lazuli/releases');
+                
+                if (!response.ok) throw new Error('Error al conectar con GitHub');
+                
+                const releases = await response.json();
+
+                // Buscamos si hay algún release que tenga archivos adjuntos
+                if (releases.length > 0 && releases[0].assets && releases[0].assets.length > 0) {
+                    
+                    // Obtenemos el link de descarga directa del primer archivo (.zip)
+                    const downloadUrl = releases[0].assets[0].browser_download_url;
+                    
+                    // Mostramos mensaje de éxito antes de empezar
+                    btn.innerHTML = '<i data-lucide="check-circle" class="w-5 h-5"></i> ¡Descarga iniciada!';
+                    lucide.createIcons();
+                    
+                    // Forzamos la descarga creando un elemento <a> invisible y dándole clic
+                    const a = document.createElement('a');
+                    a.href = downloadUrl;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+
+                } else {
+                    alert('No se encontraron archivos en el repositorio todavía. Intenta más tarde.');
+                    btn.innerHTML = originalContent;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Hubo un problema al intentar iniciar la descarga.');
+                btn.innerHTML = originalContent;
+            } finally {
+                // Restauramos el botón después de 3 segundos
+                setTimeout(() => {
+                    btn.innerHTML = originalContent;
+                    btn.disabled = false;
+                    lucide.createIcons();
+                }, 3000);
+            }
+        }
 
         // Intersection Observer para las animaciones Reveal
         document.addEventListener('DOMContentLoaded', () => {
@@ -233,6 +304,65 @@
             }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
             reveals.forEach(el => observer.observe(el));
+            
+            // --- LÓGICA DEL LIGHTBOX (VISOR DE IMÁGENES) ---
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const closeLightboxBtn = document.getElementById('close-lightbox');
+            const triggers = document.querySelectorAll('.lightbox-trigger');
+
+            // Abrir Lightbox
+            const openLightbox = (src) => {
+                lightboxImg.src = src;
+                lightbox.classList.remove('hidden');
+                lightbox.classList.add('flex');
+                
+                // Pequeño delay para que la transición CSS surta efecto después del 'display: flex'
+                setTimeout(() => {
+                    lightbox.classList.remove('opacity-0');
+                    lightbox.classList.add('opacity-100');
+                    lightboxImg.classList.remove('scale-95');
+                    lightboxImg.classList.add('scale-100');
+                }, 10);
+                
+                // Prevenir scroll en la página de fondo
+                document.body.style.overflow = 'hidden';
+            };
+
+            // Cerrar Lightbox
+            const closeLightbox = () => {
+                lightbox.classList.remove('opacity-100');
+                lightbox.classList.add('opacity-0');
+                lightboxImg.classList.remove('scale-100');
+                lightboxImg.classList.add('scale-95');
+                
+                // Esperar a que termine la animación de opacidad antes de ocultar el div
+                setTimeout(() => {
+                    lightbox.classList.add('hidden');
+                    lightbox.classList.remove('flex');
+                    document.body.style.overflow = ''; // Restaurar scroll
+                }, 300);
+            };
+
+            // Asignar eventos de clic a todas las imágenes con la clase 'lightbox-trigger'
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', () => openLightbox(trigger.src));
+            });
+
+            // Cerrar al hacer clic en la "X"
+            closeLightboxBtn.addEventListener('click', closeLightbox);
+            
+            // Cerrar al hacer clic en el fondo oscuro
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) closeLightbox();
+            });
+            
+            // Cerrar al presionar la tecla Escape
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) {
+                    closeLightbox();
+                }
+            });
         });
     </script>
 </body>
