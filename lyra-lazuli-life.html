@@ -129,16 +129,6 @@
             
             <!-- HERO SECTION (Elegante y directo) -->
             <div class="text-center mb-16 max-w-3xl mx-auto">
-                <div class="inline-flex items-center gap-4 px-6 py-3 bg-purple-900/40 rounded-full mb-8 border border-purple-500/40 backdrop-blur-md shadow-glow transition-transform hover:scale-105">
-                    <span class="relative flex h-3 w-3 shrink-0">
-                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
-                      <span class="relative inline-flex rounded-full h-3 w-3 bg-brand-500"></span>
-                    </span>
-                    <div class="flex flex-col text-left leading-none">
-                        <span class="text-xl font-extrabold text-white tracking-wide">Lyra Lazuli V2</span>
-                        <span class="text-sm font-medium text-purple-300 mt-1">Ya disponible</span>
-                    </div>
-                </div>
                 <h1 class="text-5xl md:text-6xl font-extrabold text-white leading-[1.15] mb-6 tracking-tight drop-shadow-lg">
                     El orden de una consola.<br>
                     <span class="text-gradient drop-shadow-md">El poder de tu PC.</span>
@@ -146,10 +136,17 @@
                 <p class="text-xl text-slate-300 mb-8 leading-relaxed drop-shadow-md">
                     Lyra Lazuli. Organiza tu biblioteca, optimiza el rendimiento al extremo con un clic, descubre metadatos automáticamente y respalda tu progreso en Google Drive. Diseñado para que simplemente disfrutes.
                 </p>
-                <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <!-- BOTÓN DE DESCARGA DIRECTA -->
-                    <button id="download-btn" onclick="downloadLatestRelease()" class="px-8 py-4 bg-brand-600 hover:bg-brand-500 text-white rounded-xl font-bold text-lg transition-all shadow-glow flex items-center justify-center gap-2 w-full sm:w-auto border border-brand-400/50">
-                        <i data-lucide="download-cloud" class="w-5 h-5"></i> Descargar Lyra Lazuli
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                    <!-- BOTÓN DE DESCARGA DIRECTA (Estilo Animado V2) -->
+                    <button id="download-btn" onclick="downloadLatestRelease()" class="inline-flex items-center justify-center gap-4 px-8 py-3 bg-purple-900/50 hover:bg-purple-800/70 rounded-xl border border-purple-500/50 backdrop-blur-md shadow-glow transition-all hover:scale-105 w-full sm:w-auto cursor-pointer focus:outline-none">
+                        <span class="relative flex h-3 w-3 shrink-0">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-3 w-3 bg-brand-500"></span>
+                        </span>
+                        <div class="flex flex-col text-left leading-tight">
+                            <span class="text-xl font-extrabold text-white tracking-wide">Lyra Lazuli V2</span>
+                            <span class="text-sm font-medium text-purple-300">Descargar ahora (Gratis)</span>
+                        </div>
                     </button>
                     <a href="#caracteristicas" class="px-8 py-4 bg-white/5 text-white border border-white/20 hover:border-brand-500 hover:bg-white/10 rounded-xl font-bold text-lg transition-all flex items-center justify-center w-full sm:w-auto backdrop-blur-sm">
                         Descubrir funciones
