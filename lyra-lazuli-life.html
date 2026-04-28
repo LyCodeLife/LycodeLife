@@ -137,7 +137,7 @@
                     Lyra Lazuli. Organiza tu biblioteca, optimiza el rendimiento al extremo con un clic, descubre metadatos automáticamente y respalda tu progreso en Google Drive. Diseñado para que simplemente disfrutes.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-                    <!-- BOTÓN DE DESCARGA DIRECTA -->
+                    <!-- BOTÓN DE DESCARGA DIRECTA (GitHub API) -->
                     <button id="download-btn" onclick="downloadLatestRelease()" class="inline-flex items-center justify-center gap-4 px-8 py-3 bg-purple-900/50 hover:bg-purple-800/70 rounded-xl border border-purple-500/50 backdrop-blur-md shadow-glow transition-all hover:scale-105 w-full sm:w-auto cursor-pointer focus:outline-none">
                         <span class="relative flex h-3 w-3 shrink-0">
                           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
@@ -145,7 +145,7 @@
                         </span>
                         <div class="flex flex-col text-left leading-tight">
                             <span class="text-xl font-extrabold text-white tracking-wide">Lyra Lazuli V2</span>
-                            <span class="text-sm font-medium text-purple-300">Descargar ahora (.rar)</span>
+                            <span class="text-sm font-medium text-purple-300">Descargar ahora (Gratis)</span>
                         </div>
                     </button>
                     <a href="#caracteristicas" class="px-8 py-4 bg-white/5 text-white border border-white/20 hover:border-brand-500 hover:bg-white/10 rounded-xl font-bold text-lg transition-all flex items-center justify-center w-full sm:w-auto backdrop-blur-sm">
@@ -350,39 +350,52 @@
         lucide.createIcons();
 
         // ----------------------------------------------------
-        // LÓGICA DE DESCARGA DIRECTA (ARCHIVO LOCAL/RELATIVO)
+        // LÓGICA DE DESCARGA DESDE LA API DE GITHUB (RELEASES)
         // ----------------------------------------------------
         async function downloadLatestRelease() {
             const btn = document.getElementById('download-btn');
             const originalContent = btn.innerHTML;
             
             // Cambiar estado a "Cargando"
-            btn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Preparando archivo...';
+            btn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Conectando...';
             btn.disabled = true;
             lucide.createIcons();
 
             try {
-                // Simulamos un pequeño retraso para mostrar la animación a modo estético
-                await new Promise(resolve => setTimeout(resolve, 800));
-
-                // Mostramos mensaje de éxito antes de empezar
-                btn.innerHTML = '<i data-lucide="check-circle" class="w-5 h-5"></i> ¡Descarga iniciada!';
-                lucide.createIcons();
+                // Petición a la API de GitHub para obtener la lista de releases
+                const response = await fetch('https://api.github.com/repos/ShordyEA/Lyra-Lazuli/releases');
                 
-                // Forzamos la descarga del archivo lyralazuli.rar
-                const a = document.createElement('a');
-                a.href = 'lyralazuli.rar'; // Link directo al archivo que subas al mismo directorio
-                a.download = 'lyralazuli.rar';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
+                if (!response.ok) throw new Error('Error al conectar con GitHub');
+                
+                const releases = await response.json();
 
+                // Verificamos que existan releases y que el más reciente (índice 0) tenga archivos (assets)
+                if (releases.length > 0 && releases[0].assets && releases[0].assets.length > 0) {
+                    
+                    // Obtenemos el link de descarga directa del primer archivo adjunto en la última versión
+                    const downloadUrl = releases[0].assets[0].browser_download_url;
+                    
+                    // Mostramos mensaje de éxito antes de iniciar la descarga
+                    btn.innerHTML = '<i data-lucide="check-circle" class="w-5 h-5"></i> ¡Descarga iniciada!';
+                    lucide.createIcons();
+                    
+                    // Forzamos la descarga del archivo de GitHub
+                    const a = document.createElement('a');
+                    a.href = downloadUrl;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+
+                } else {
+                    alert('No se encontraron archivos en la última versión del repositorio todavía. Intenta más tarde.');
+                    btn.innerHTML = originalContent;
+                }
             } catch (error) {
                 console.error('Error:', error);
-                alert('Hubo un problema al intentar iniciar la descarga.');
+                alert('Hubo un problema al intentar descargar desde GitHub. Revisa tu conexión a internet.');
                 btn.innerHTML = originalContent;
             } finally {
-                // Restauramos el botón después de 3 segundos
+                // Restauramos el botón a su estado original después de 3 segundos
                 setTimeout(() => {
                     btn.innerHTML = originalContent;
                     btn.disabled = false;
