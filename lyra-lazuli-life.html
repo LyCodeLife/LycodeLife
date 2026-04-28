@@ -137,15 +137,15 @@
                     Lyra Lazuli. Organiza tu biblioteca, optimiza el rendimiento al extremo con un clic, descubre metadatos automáticamente y respalda tu progreso en Google Drive. Diseñado para que simplemente disfrutes.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-                    <!-- BOTÓN DE DESCARGA DIRECTA (Actualizado) -->
+                    <!-- BOTÓN DE DESCARGA DIRECTA -->
                     <button id="download-btn" onclick="downloadLatestRelease()" class="inline-flex items-center justify-center gap-4 px-8 py-3 bg-purple-900/50 hover:bg-purple-800/70 rounded-xl border border-purple-500/50 backdrop-blur-md shadow-glow transition-all hover:scale-105 w-full sm:w-auto cursor-pointer focus:outline-none">
                         <span class="relative flex h-3 w-3 shrink-0">
                           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
                           <span class="relative inline-flex rounded-full h-3 w-3 bg-brand-500"></span>
                         </span>
                         <div class="flex flex-col text-left leading-tight">
-                            <span class="text-xl font-extrabold text-white tracking-wide">Descargar Lyra Lazuli</span>
-                            <span class="text-sm font-medium text-purple-300">Última versión (Gratis)</span>
+                            <span class="text-xl font-extrabold text-white tracking-wide">Lyra Lazuli V2</span>
+                            <span class="text-sm font-medium text-purple-300">Descargar ahora (.rar)</span>
                         </div>
                     </button>
                     <a href="#caracteristicas" class="px-8 py-4 bg-white/5 text-white border border-white/20 hover:border-brand-500 hover:bg-white/10 rounded-xl font-bold text-lg transition-all flex items-center justify-center w-full sm:w-auto backdrop-blur-sm">
@@ -183,6 +183,7 @@
                     </div>
                     <div class="order-2 flex justify-center w-full relative group">
                         <div class="absolute inset-0 bg-brand-600 rounded-2xl transform rotate-2 opacity-20 group-hover:rotate-3 transition-transform duration-300 blur-sm"></div>
+                        <!-- IMAGEN ORIGINAL (con fondo oscuro) -->
                         <img src="assets/lyralazuli/ui-dashboard.png" alt="Interfaz de Lyra Lazuli" class="lightbox-trigger cursor-pointer relative w-full h-auto max-h-[450px] object-contain rounded-xl shadow-bento border border-white/10 bg-black/60 p-2 z-10 transition-transform duration-300 group-hover:-translate-y-1 hover:ring-4 hover:ring-brand-500/50 backdrop-blur-md" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNDUwIiB2aWV3Qm94PSIwIDAgODAwIDQ1MCIgZmlsbD0ibm9uZSI+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI0NTAiIGZpbGw9IiMxRTFFMkUiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiNBNkFEQzgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiPkltYWdlbiBkZSBJbnRlcmZhejwvdGV4dD48L3N2Zz4='">
                     </div>
                 </div>
@@ -251,6 +252,7 @@
                 <div class="grid lg:grid-cols-2 gap-12 items-center reveal">
                     <div class="order-2 lg:order-1 flex justify-center w-full relative group">
                         <div class="absolute inset-0 bg-fuchsia-600 rounded-2xl transform -rotate-2 opacity-20 group-hover:-rotate-3 transition-transform duration-300 blur-sm"></div>
+                        <!-- IMAGEN ORIGINAL (con fondo oscuro y hover fucsia) -->
                         <img src="assets/lyralazuli/metedata.png" alt="Metadatos y Personalización" class="lightbox-trigger cursor-pointer relative w-full h-auto max-h-[450px] object-contain rounded-xl shadow-bento border border-white/10 bg-black/60 p-2 z-10 transition-transform duration-300 group-hover:-translate-y-1 hover:ring-4 hover:ring-fuchsia-500/50 backdrop-blur-md" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNDUwIiB2aWV3Qm94PSIwIDAgODAwIDQ1MCIgZmlsbD0ibm9uZSI+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI0NTAiIGZpbGw9IiMxRTFFMkUiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiNBNkFEQzgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiPkltYWdlbiBkZSBNZXRhZGF0b3M8L3RleHQ+PC9zdmc+'">
                     </div>
                     <div class="order-1 lg:order-2">
@@ -348,50 +350,36 @@
         lucide.createIcons();
 
         // ----------------------------------------------------
-        // LÓGICA DE DESCARGA DIRECTA DESDE GITHUB RELEASES
+        // LÓGICA DE DESCARGA DIRECTA (ARCHIVO LOCAL/RELATIVO)
         // ----------------------------------------------------
         async function downloadLatestRelease() {
             const btn = document.getElementById('download-btn');
             const originalContent = btn.innerHTML;
             
             // Cambiar estado a "Cargando"
-            btn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Iniciando descarga...';
+            btn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Preparando archivo...';
             btn.disabled = true;
             lucide.createIcons();
 
             try {
-                // ACTUALIZADO: Cambiado a ShordyEA/lyra_lazuli (tal cual aparece en la imagen)
-                const response = await fetch('https://api.github.com/repos/ShordyEA/lyra_lazuli/releases');
-                
-                if (!response.ok) throw new Error('Error al conectar con GitHub');
-                
-                const releases = await response.json();
+                // Simulamos un pequeño retraso para mostrar la animación a modo estético
+                await new Promise(resolve => setTimeout(resolve, 800));
 
-                // Buscamos si hay algún release que tenga archivos adjuntos
-                if (releases.length > 0 && releases[0].assets && releases[0].assets.length > 0) {
-                    
-                    // Mejorado: Buscar específicamente un .rar o .exe (por si adjuntas código fuente además del release)
-                    const targetAsset = releases[0].assets.find(a => a.name.endsWith('.rar') || a.name.endsWith('.exe') || a.name.endsWith('.zip')) || releases[0].assets[0];
-                    const downloadUrl = targetAsset.browser_download_url;
-                    
-                    // Mostramos mensaje de éxito antes de empezar
-                    btn.innerHTML = '<i data-lucide="check-circle" class="w-5 h-5"></i> ¡Descarga iniciada!';
-                    lucide.createIcons();
-                    
-                    // Forzamos la descarga creando un elemento <a> invisible y dándole clic
-                    const a = document.createElement('a');
-                    a.href = downloadUrl;
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
+                // Mostramos mensaje de éxito antes de empezar
+                btn.innerHTML = '<i data-lucide="check-circle" class="w-5 h-5"></i> ¡Descarga iniciada!';
+                lucide.createIcons();
+                
+                // Forzamos la descarga del archivo lyralazuli.rar
+                const a = document.createElement('a');
+                a.href = 'lyralazuli.rar'; // Link directo al archivo que subas al mismo directorio
+                a.download = 'lyralazuli.rar';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
 
-                } else {
-                    alert('No se encontraron archivos en el repositorio todavía. Intenta más tarde.');
-                    btn.innerHTML = originalContent;
-                }
             } catch (error) {
                 console.error('Error:', error);
-                alert('Hubo un problema al intentar iniciar la descarga. Por favor verifica el repositorio.');
+                alert('Hubo un problema al intentar iniciar la descarga.');
                 btn.innerHTML = originalContent;
             } finally {
                 // Restauramos el botón después de 3 segundos
