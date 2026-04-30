@@ -3,8 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LycodeLife | Deja de perder dinero en tareas manuales</title>
     
+    <!-- OPTIMIZACIÓN SEO (Día 2): Title y Meta Description -->
+    <!-- Antes: <title>LycodeLife | Deja de perder dinero en tareas manuales</title> (Sin keywords de búsqueda) -->
+    <title>Servicios de Automatización de Procesos y Scripts a Medida | LycodeLife</title>
+    <!-- Se añade meta descripción que contiene palabras clave principales (automatización, scripts, extracción de datos, B2B) -->
+    <meta name="description" content="Desarrollo de scripts a medida y automatización de procesos para empresas. Ahorra tiempo en extracción de datos, integraciones API y notificaciones masivas. Cotiza tu proyecto.">
+    
+    <!-- OPTIMIZACIÓN SEO (Día 3): Etiquetas Hreflang para multi-idioma/país -->
+    <!-- Esto le dice a Google que no auto-traduzca, sino que sirva la versión correcta -->
+    <link rel="canonical" href="https://lycodelife.com/" />
+    <link rel="alternate" hreflang="es" href="https://lycodelife.com/" />
+    <link rel="alternate" hreflang="es-EC" href="https://lycodelife.com/" /> <!-- Específico para Ecuador -->
+    <link rel="alternate" hreflang="en" href="https://lycodelife.com/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://lycodelife.com/" />
+
+    <!-- OPTIMIZACIÓN SEO (Día 2): Datos Estructurados (Schema.org) para Servicios Profesionales -->
+    <!-- Esto le dice a Google y ChatGTP exactamente qué vendes sin que tengan que adivinar -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "ProfessionalService",
+          "name": "LycodeLife",
+          "founder": {
+            "@type": "Person",
+            "name": "Shordy Simbaña",
+            "jobTitle": "Ingeniero en Sistemas"
+          },
+          "description": "Servicios de ingeniería B2B para automatización de procesos, desarrollo de scripts en Python, extracción de datos e integración de APIs.",
+          "areaServed": "Global",
+          "offers": {
+            "@type": "Offer",
+            "description": "Consultoría y desarrollo de automatizaciones a medida."
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "¿Quién está detrás de LycodeLife?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "LycodeLife está fundado y dirigido por Shordy Simbaña, futuro Ingeniero en Sistemas especializado en automatización de procesos B2B y scripts en Python."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Qué procesos se pueden automatizar en una empresa?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Se automatizan tareas como extracción de datos (Scraping), notificaciones masivas por WhatsApp, facturación automatizada (OCR) e integración entre softwares (ERP, CRM)."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Cómo se implementa la Inteligencia Artificial en mis procesos?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Integramos modelos de IA a través de APIs para que tus automatizaciones entiendan contexto, como leer documentos no estructurados o clasificar correos automáticamente."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Es seguro automatizar procesos con datos confidenciales de mi empresa?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Absolutamente. Los scripts se desarrollan con altos estándares de seguridad y se ejecutan en tu propia infraestructura (servidores o nube privada). No retenemos ni compartimos tu información."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Cuánto tiempo toma desarrollar una automatización a medida?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Dependiendo de la complejidad, la mayoría de los desarrollos toman entre 2 y 4 semanas. El Retorno de Inversión (ROI) se nota desde el día 1 al reducir las horas manuales a cero."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
     <!-- Favicon (Icono de la página) -->
     <link rel="icon" type="image/png" href="assets/favicon.png">
     
@@ -84,7 +167,6 @@
             transform: translateY(0);
         }
 
-        /* En B2B, los botones deben verse clickeables y premium */
         .btn-primary {
             background: #2563eb;
             color: white;
@@ -110,17 +192,28 @@
             
             <!-- LOGO EN IMAGEN -->
             <a href="#inicio" class="flex items-center outline-none">
-                <!-- Se asume que guardaste tu imagen en la carpeta assets como 'logo.png' -->
-                <img src="assets/favicon.png" alt="LycodeLife Logo" class="h-8 w-auto hover:opacity-90 transition-opacity">
+                <!-- Atributo ALT optimizado -->
+                <img src="assets/favicon.png" alt="LycodeLife Logo - Servicios de Automatización B2B" class="h-8 w-auto hover:opacity-90 transition-opacity">
             </a>
 
             <div class="hidden md:flex items-center space-x-8">
-                <a href="#problema" class="text-sm font-semibold text-brand-text hover:text-brand-600 transition-colors">El Problema</a>
-                <a href="#soluciones" class="text-sm font-semibold text-brand-text hover:text-brand-600 transition-colors">Casos de Éxito</a>
-                <a href="#proceso" class="text-sm font-semibold text-brand-text hover:text-brand-600 transition-colors">Cómo Trabajo</a>
+                <!-- Enlaces con títulos ancla que describen mejor las secciones -->
+                <a href="#servicios-automatizacion" class="text-sm font-semibold text-brand-text hover:text-brand-600 transition-colors">Servicios RPA</a>
+                <a href="#portafolio-casos-exito" class="text-sm font-semibold text-brand-text hover:text-brand-600 transition-colors">Casos de Éxito</a>
+                <a href="#metodologia-trabajo" class="text-sm font-semibold text-brand-text hover:text-brand-600 transition-colors">Cómo Trabajo</a>
                 
-                <!-- NUEVO BOTÓN: Lyra Lazuli Life -->
                 <a href="lyra-lazuli-life.html" class="px-5 py-2.5 bg-brand-50 text-brand-600 border border-brand-200 hover:bg-brand-100 rounded-lg font-bold text-sm transition-colors">Lyra Lazuli</a>
+                
+                <!-- OPTIMIZACIÓN SEO (Día 3): Selector de Idioma Manual -->
+                <div class="relative group">
+                    <button class="flex items-center gap-1 text-sm font-semibold text-brand-text hover:text-brand-600 transition-colors py-2">
+                        <i data-lucide="globe" class="w-4 h-4"></i> ES <i data-lucide="chevron-down" class="w-3 h-3"></i>
+                    </button>
+                    <div class="absolute right-0 top-full w-24 bg-white border border-slate-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden">
+                        <a href="/" class="block px-4 py-2 text-sm text-brand-900 bg-slate-50 font-bold border-b border-slate-100">🇪🇸 ES</a>
+                        <a href="/en/" class="block px-4 py-2 text-sm text-slate-500 hover:bg-slate-50 hover:text-brand-600 transition-colors">🇺🇸 EN</a>
+                    </div>
+                </div>
                 
                 <button onclick="toggleContactModal()" class="px-5 py-2.5 btn-primary rounded-lg font-bold text-sm">Cotizar Automatización</button>
             </div>
@@ -131,37 +224,49 @@
         </div>
 
         <div id="mobile-menu" class="hidden absolute top-20 left-0 w-full bg-white border-b border-slate-200 py-4 px-6 flex flex-col space-y-4 shadow-xl">
-            <a href="#problema" onclick="toggleMobileMenu()" class="text-left font-semibold text-brand-text">El Problema</a>
-            <a href="#soluciones" onclick="toggleMobileMenu()" class="text-left font-semibold text-brand-text">Casos de Éxito</a>
-            <a href="#proceso" onclick="toggleMobileMenu()" class="text-left font-semibold text-brand-text">Cómo Trabajo</a>
+            <a href="#servicios-automatizacion" onclick="toggleMobileMenu()" class="text-left font-semibold text-brand-text">Servicios RPA</a>
+            <a href="#portafolio-casos-exito" onclick="toggleMobileMenu()" class="text-left font-semibold text-brand-text">Casos de Éxito</a>
+            <a href="#metodologia-trabajo" onclick="toggleMobileMenu()" class="text-left font-semibold text-brand-text">Cómo Trabajo</a>
             
-            <!-- NUEVO BOTÓN MÓVIL: Lyra Lazuli Life -->
             <a href="lyra-lazuli-life.html" class="w-full text-center px-5 py-3 bg-brand-50 text-brand-600 border border-brand-200 rounded-lg font-bold mt-2 transition-colors">Lyra Lazuli Life</a>
+            
+            <!-- OPTIMIZACIÓN SEO (Día 3): Selector de Idioma Manual (Móvil) -->
+            <div class="flex justify-center gap-4 py-3 mt-2 border-t border-slate-100">
+                <a href="/" class="flex items-center gap-1 text-sm font-bold text-brand-600"><i data-lucide="globe" class="w-4 h-4"></i> ES</a>
+                <span class="text-slate-200">|</span>
+                <a href="/en/" class="flex items-center gap-1 text-sm font-semibold text-slate-500 hover:text-brand-600"><i data-lucide="globe" class="w-4 h-4"></i> EN</a>
+            </div>
             
             <button onclick="toggleContactModal(); toggleMobileMenu()" class="w-full text-center px-5 py-3 btn-primary rounded-lg font-bold mt-2">Cotizar Automatización</button>
         </div>
     </nav>
 
-    <!-- WhatsApp Flotante (Cambiado a un Call to Action más B2B) -->
-    <a href="https://wa.me/message/TU_NUMERO_AQUI" target="_blank" class="fixed bottom-6 right-6 z-[100] bg-[#25D366] rounded-full p-4 flex items-center justify-center text-white shadow-xl hover:scale-105 transition-all group">
+    <!-- WhatsApp Flotante -->
+    <a href="https://wa.me/message/TU_NUMERO_AQUI" target="_blank" class="fixed bottom-6 right-6 z-[100] bg-[#25D366] rounded-full p-4 flex items-center justify-center text-white shadow-xl hover:scale-105 transition-all group" rel="noopener noreferrer">
         <i data-lucide="message-circle" class="w-6 h-6"></i>
         <span class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 ease-in-out font-semibold text-sm pl-0 group-hover:pl-2">Escríbeme directo</span>
     </a>
 
-    <!-- MAIN (Single Page Scroll) -->
+    <!-- MAIN -->
     <main class="flex-grow relative pt-20">
 
-        <!-- ==========================================
-             HERO SECTION (Focado en ROI y Dolor)
-        =========================================== -->
+        <!-- HERO SECTION -->
         <section id="inicio" class="py-20 md:py-32 px-6">
             <div class="max-w-4xl mx-auto text-center">
                 <div class="inline-block bg-blue-50 text-brand-600 font-bold px-4 py-1.5 rounded-full text-sm mb-6 reveal">
                     Para equipos de operaciones, ventas y finanzas
                 </div>
-                <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-brand-900 leading-[1.1] mb-6 reveal tracking-tight" style="transition-delay: 100ms;">
-                    Deja de perder dinero en <span class="text-gradient">tareas manuales.</span>
+                
+                <!-- OPTIMIZACIÓN SEO: El H1 ahora contiene la Keyword Principal. 
+                     El copy persuasivo ("Deja de perder dinero...") se bajó a un párrafo destacado para no perder la venta. -->
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-brand-900 leading-[1.1] mb-4 reveal tracking-tight" style="transition-delay: 100ms;">
+                    Servicios de <span class="text-gradient">Automatización de Procesos B2B.</span>
                 </h1>
+                
+                <!-- Copy de ventas conservado -->
+                <p class="text-2xl font-bold text-slate-700 mb-6 reveal" style="transition-delay: 150ms;">
+                    Deja de perder dinero en tareas manuales.
+                </p>
                 
                 <p class="text-xl text-slate-600 mb-10 reveal max-w-2xl mx-auto leading-relaxed" style="transition-delay: 200ms;">
                     Si tu equipo pasa más de 2 horas al día copiando datos, limpiando Excels o enviando mensajes repetitivos, estás perdiendo miles de dólares al año. Desarrollo scripts a medida que hacen ese trabajo en segundos.
@@ -169,16 +274,16 @@
                 
                 <div class="flex flex-col sm:flex-row justify-center gap-4 reveal" style="transition-delay: 300ms;">
                     <button onclick="toggleContactModal()" class="px-8 py-4 btn-primary rounded-xl font-bold text-lg flex items-center justify-center gap-2">
-                        Cotizar mi proyecto <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        Cotizar automatización <i data-lucide="arrow-right" class="w-5 h-5"></i>
                     </button>
-                    <a href="#soluciones" class="px-8 py-4 bg-white text-brand-900 border-2 border-slate-200 hover:border-brand-600 rounded-xl font-bold transition-all text-lg flex items-center justify-center">
+                    <a href="#portafolio-casos-exito" class="px-8 py-4 bg-white text-brand-900 border-2 border-slate-200 hover:border-brand-600 rounded-xl font-bold transition-all text-lg flex items-center justify-center">
                         Ver cómo funciona
                     </a>
                 </div>
 
                 <!-- Trust Indicators B2B -->
                 <div class="mt-16 pt-8 border-t border-slate-200 reveal" style="transition-delay: 400ms;">
-                    <p class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-6">Resultados típicos de mis clientes</p>
+                    <p class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-6">Resultados típicos en nuestros desarrollos</p>
                     <div class="flex flex-wrap justify-center gap-8 md:gap-16 text-center">
                         <div>
                             <div class="text-3xl font-extrabold text-brand-900">95%</div>
@@ -197,17 +302,16 @@
             </div>
         </section>
 
-        <!-- ==========================================
-             EL PROBLEMA (Puntos de Dolor)
-        =========================================== -->
-        <section id="problema" class="py-24 px-6 bg-brand-900 text-white relative overflow-hidden">
+        <!-- SERVICIOS / PROBLEMA SECTION -->
+        <section id="servicios-automatizacion" class="py-24 px-6 bg-brand-900 text-white relative overflow-hidden">
             <!-- Background accent -->
             <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-brand-600 rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
             
             <div class="max-w-6xl mx-auto relative z-10">
                 <div class="text-center mb-16 reveal">
-                    <h2 class="text-3xl md:text-4xl font-extrabold mb-4">El talento humano es caro. ¿Por qué lo usas para ser un robot?</h2>
-                    <p class="text-slate-400 text-lg max-w-2xl mx-auto">Automatizo los cuellos de botella que están frenando el crecimiento de tu empresa.</p>
+                    <!-- OPTIMIZACIÓN SEO: H2 con keywords semánticas ("Automatización Robótica RPA") -->
+                    <h2 class="text-3xl md:text-4xl font-extrabold mb-4">Automatización Robótica (RPA) para Cuellos de Botella</h2>
+                    <p class="text-slate-400 text-lg max-w-2xl mx-auto">El talento humano es caro. ¿Por qué lo usas para ser un robot? Automatizo los procesos que están frenando el crecimiento de tu empresa.</p>
                 </div>
 
                 <div class="grid md:grid-cols-3 gap-8">
@@ -215,35 +319,35 @@
                         <div class="w-14 h-14 bg-brand-600/20 rounded-xl flex items-center justify-center mb-6">
                             <i data-lucide="file-spreadsheet" class="w-7 h-7 text-brand-400"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-3">Extracción de Datos (Data Entry)</h3>
+                        <!-- OPTIMIZACIÓN SEO: H3 con variantes de búsqueda (Data Entry / Scraping) -->
+                        <h3 class="text-xl font-bold mb-3">Extracción Automática de Datos (Web Scraping)</h3>
                         <p class="text-slate-400">Extraigo datos de cientos de PDFs, webs o correos simultáneamente y los inyecto en tu CRM o base de datos. Sin errores de tipeo.</p>
                     </div>
                     <div class="bg-slate-800/50 border border-slate-700 p-8 rounded-2xl reveal hover:bg-slate-800 transition-colors" style="transition-delay: 100ms;">
                         <div class="w-14 h-14 bg-brand-600/20 rounded-xl flex items-center justify-center mb-6">
                             <i data-lucide="message-square" class="w-7 h-7 text-brand-400"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-3">Notificaciones Masivas Automáticas</h3>
+                        <h3 class="text-xl font-bold mb-3">Bots de WhatsApp y Notificaciones Masivas</h3>
                         <p class="text-slate-400">Sistemas que envían mensajes de WhatsApp o correos 100% personalizados a tu base de clientes (cobranzas, reportes, avisos) sin intervención manual.</p>
                     </div>
                     <div class="bg-slate-800/50 border border-slate-700 p-8 rounded-2xl reveal hover:bg-slate-800 transition-colors" style="transition-delay: 200ms;">
                         <div class="w-14 h-14 bg-brand-600/20 rounded-xl flex items-center justify-center mb-6">
                             <i data-lucide="code-2" class="w-7 h-7 text-brand-400"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-3">Integraciones a Medida (APIs)</h3>
-                        <p class="text-slate-400">Hago que tus softwares se hablen entre sí. Si tu ERP no se conecta con tu e-commerce, yo construyo el puente invisible que los une.</p>
+                        <h3 class="text-xl font-bold mb-3">Integraciones de Software a Medida (APIs)</h3>
+                        <p class="text-slate-400">Hago que tus softwares se hablen entre sí. Si tu ERP no se conecta con tu e-commerce, yo construyo el puente invisible que los une vía API.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ==========================================
-             SOLUCIONES (Casos de Éxito / Portafolio)
-        =========================================== -->
-        <section id="soluciones" class="py-24 px-6 bg-slate-50 border-b border-slate-200">
+        <!-- CASOS DE ÉXITO SECTION -->
+        <section id="portafolio-casos-exito" class="py-24 px-6 bg-slate-50 border-b border-slate-200">
             <div class="max-w-6xl mx-auto">
                 <div class="text-center mb-20 reveal">
-                    <h2 class="text-4xl font-extrabold text-brand-900 mb-4">Soluciones Reales. Resultados Reales.</h2>
-                    <p class="text-lg text-slate-600">Herramientas nativas creadas para procesos específicos que eliminaron por completo el trabajo manual.</p>
+                    <!-- OPTIMIZACIÓN SEO: H2 enfocado en Portafolio y Scripts -->
+                    <h2 class="text-4xl font-extrabold text-brand-900 mb-4">Portafolio de Automatizaciones y Scripts a Medida</h2>
+                    <p class="text-lg text-slate-600">Soluciones reales. Resultados reales. Herramientas nativas creadas para procesos específicos que eliminaron por completo el trabajo manual.</p>
                 </div>
 
                 <div class="space-y-32">
@@ -251,9 +355,10 @@
                     <div class="grid lg:grid-cols-2 gap-12 items-center reveal">
                         <div class="order-1">
                             <div class="inline-flex items-center gap-2 px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold mb-4">
-                                <span class="w-2 h-2 rounded-full bg-green-500"></span> Operaciones
+                                <span class="w-2 h-2 rounded-full bg-green-500"></span> Operaciones / Ventas
                             </div>
-                            <h3 class="text-3xl font-bold text-brand-900 mb-4">Secuenciador de WhatsApp Empresarial</h3>
+                            <!-- OPTIMIZACIÓN SEO: H3 con keywords específicas del servicio -->
+                            <h3 class="text-3xl font-bold text-brand-900 mb-4">Software Secuenciador de WhatsApp Empresarial</h3>
                             <p class="text-slate-600 mb-6 text-lg">
                                 Diseñado para equipos de cobranza y ventas. Permite enviar secuencias de texto, imágenes y documentos PDF a bases de datos masivas con personalización dinámica.
                             </p>
@@ -264,10 +369,16 @@
                                     <li class="flex items-start gap-2"><i data-lucide="shield" class="w-5 h-5 text-brand-600 shrink-0 mt-0.5"></i> Pausas humanizadas y algoritmos de mitigación para reducir drásticamente el riesgo de bloqueo por Meta.</li>
                                 </ul>
                             </div>
+                            
+                            <!-- OPTIMIZACIÓN SEO (Arquitectura Anidada): Enlace a la subpágina hija específica -->
+                            <a href="servicios/bot-whatsapp-masivo.html" class="inline-flex items-center gap-2 text-brand-600 font-bold hover:text-brand-700 transition-colors mt-2">
+                                Ver características técnicas del Bot de WhatsApp <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
                         </div>
                         <div class="order-2 flex justify-center w-full relative group">
                             <div class="absolute inset-0 bg-green-600 rounded-2xl transform rotate-2 opacity-10 group-hover:rotate-3 transition-transform duration-300"></div>
-                            <img src="assets/whatsapp-bot.png" alt="Dashboard de automatización de WhatsApp" class="relative w-full h-auto max-h-[450px] object-contain rounded-xl shadow-2xl border border-slate-200 bg-white p-2 z-10 transition-transform duration-300 group-hover:-translate-y-1">
+                            <!-- OPTIMIZACIÓN SEO: Atributo alt mejorado describiendo la imagen -->
+                            <img src="assets/whatsapp-bot.png" alt="Desarrollo de Software Secuenciador y Bot de WhatsApp para Empresas" class="relative w-full h-auto max-h-[450px] object-contain rounded-xl shadow-2xl border border-slate-200 bg-white p-2 z-10 transition-transform duration-300 group-hover:-translate-y-1">
                         </div>
                     </div>
 
@@ -275,15 +386,15 @@
                     <div class="grid lg:grid-cols-2 gap-12 items-center reveal">
                         <div class="order-2 lg:order-1 flex justify-center w-full relative group">
                             <div class="absolute inset-0 bg-blue-600 rounded-2xl transform -rotate-2 opacity-10 group-hover:-rotate-3 transition-transform duration-300"></div>
-                            <img src="assets/excel-cleaner.png" alt="Limpieza automatizada de bases de datos" class="relative w-full h-auto max-h-[450px] object-contain rounded-xl shadow-2xl border border-slate-200 bg-white p-2 z-10 transition-transform duration-300 group-hover:-translate-y-1">
+                            <img src="assets/excel-cleaner.png" alt="Script en Python para Limpieza Automatizada de Bases de Datos Excel y ERP" class="relative w-full h-auto max-h-[450px] object-contain rounded-xl shadow-2xl border border-slate-200 bg-white p-2 z-10 transition-transform duration-300 group-hover:-translate-y-1">
                         </div>
                         <div class="order-1 lg:order-2">
                             <div class="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold mb-4">
                                 <span class="w-2 h-2 rounded-full bg-blue-500"></span> Inventario y Finanzas
                             </div>
-                            <h3 class="text-3xl font-bold text-brand-900 mb-4">PriceClean: Saneamiento de Datos</h3>
+                            <h3 class="text-3xl font-bold text-brand-900 mb-4">Script Python para Saneamiento de Datos y Excels</h3>
                             <p class="text-slate-600 mb-6 text-lg">
-                                Los proveedores envían formatos de listas de precios desastrosos. Este script estructuriza, limpia, cruza datos y calcula márgenes automáticamente para ERPs.
+                                Los proveedores envían formatos de listas de precios desastrosos. Este script estructura, limpia, cruza datos y calcula márgenes automáticamente para alimentar sistemas ERP.
                             </p>
                             <div class="bg-white p-6 rounded-xl border border-slate-200 mb-6 shadow-sm">
                                 <h4 class="font-bold text-brand-900 mb-2">El Retorno de Inversión (ROI):</h4>
@@ -292,6 +403,11 @@
                                     <li class="flex items-start gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-brand-600 shrink-0 mt-0.5"></i> Eliminación total de errores de fijación de precios (pricing).</li>
                                 </ul>
                             </div>
+
+                            <!-- OPTIMIZACIÓN SEO (Arquitectura Anidada): Enlace a la subpágina hija específica -->
+                            <a href="servicios/limpieza-datos-python.html" class="inline-flex items-center gap-2 text-brand-600 font-bold hover:text-brand-700 transition-colors mt-2">
+                                Ver caso de estudio de PriceClean (Script Python) <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
                         </div>
                     </div>
 
@@ -301,9 +417,9 @@
                             <div class="inline-flex items-center gap-2 px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-bold mb-4">
                                 <span class="w-2 h-2 rounded-full bg-purple-500"></span> Contabilidad
                             </div>
-                            <h3 class="text-3xl font-bold text-brand-900 mb-4">SmartExtract: OCR de Facturas</h3>
+                            <h3 class="text-3xl font-bold text-brand-900 mb-4">OCR de Facturas y Procesamiento Inteligente de PDFs</h3>
                             <p class="text-slate-600 mb-6 text-lg">
-                                Lectura masiva de documentos PDF. El script escanea carpetas enteras de facturas, extrae el RUC, razón social, fecha y totales, y exporta una base de datos limpia.
+                                Lectura masiva de documentos PDF. El script escanea carpetas enteras de facturas, extrae el RUC, razón social, fecha y totales, y exporta una base de datos limpia para el área contable.
                             </p>
                             <div class="bg-white p-6 rounded-xl border border-slate-200 mb-6 shadow-sm">
                                 <h4 class="font-bold text-brand-900 mb-2">El Retorno de Inversión (ROI):</h4>
@@ -312,57 +428,127 @@
                                     <li class="flex items-start gap-2"><i data-lucide="folder-check" class="w-5 h-5 text-brand-600 shrink-0 mt-0.5"></i> Estandarización de auditorías internas al 100%.</li>
                                 </ul>
                             </div>
+
+                            <!-- OPTIMIZACIÓN SEO (Arquitectura Anidada): Enlace a la subpágina hija específica -->
+                            <a href="servicios/ocr-extraccion-facturas.html" class="inline-flex items-center gap-2 text-brand-600 font-bold hover:text-brand-700 transition-colors mt-2">
+                                Descubre cómo funciona la tecnología OCR <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
                         </div>
                         <div class="order-2 flex justify-center w-full relative group">
                             <div class="absolute inset-0 bg-purple-600 rounded-2xl transform rotate-2 opacity-10 group-hover:rotate-3 transition-transform duration-300"></div>
-                            <img src="assets/facturas-ocr.png" alt="OCR y extracción de datos de facturas" class="relative w-full h-auto max-h-[450px] object-contain rounded-xl shadow-2xl border border-slate-200 bg-white p-2 z-10 transition-transform duration-300 group-hover:-translate-y-1">
+                            <img src="assets/facturas-ocr.png" alt="Sistema OCR para extracción de datos de facturas PDF automatizado" class="relative w-full h-auto max-h-[450px] object-contain rounded-xl shadow-2xl border border-slate-200 bg-white p-2 z-10 transition-transform duration-300 group-hover:-translate-y-1">
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ==========================================
-             CÓMO TRABAJO (Proceso B2B)
-        =========================================== -->
-        <section id="proceso" class="py-24 px-6 bg-white">
+        <!-- CÓMO TRABAJO SECTION -->
+        <section id="metodologia-trabajo" class="py-24 px-6 bg-white">
             <div class="max-w-4xl mx-auto">
                 <div class="text-center mb-16 reveal">
-                    <h2 class="text-4xl font-extrabold text-brand-900 mb-6">Trato directo. Cero burocracia.</h2>
-                    <p class="text-xl text-slate-600">Al trabajar conmigo, no hablas con ejecutivos de cuenta que no saben de código. Hablas directamente con el ingeniero que resolverá tu problema.</p>
+                    <!-- OPTIMIZACIÓN SEO: H2 estructurado para búsqueda de consultores B2B -->
+                    <h2 class="text-4xl font-extrabold text-brand-900 mb-6">Consultoría y Desarrollo de Automatizaciones B2B</h2>
+                    <p class="text-xl text-slate-600">Trato directo. Cero burocracia. Al trabajar conmigo, no hablas con ejecutivos de cuenta que no saben de código. Hablas directamente con el ingeniero de software que resolverá tu problema.</p>
                 </div>
 
                 <div class="relative border-l-4 border-slate-200 ml-4 md:ml-8 space-y-12 pb-8">
                     <div class="relative pl-8 md:pl-12 reveal">
                         <div class="absolute -left-[22px] top-1 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold shadow-lg shadow-brand-500/30">1</div>
-                        <h3 class="text-2xl font-bold text-brand-900 mb-2">Auditoría del Proceso</h3>
-                        <p class="text-slate-600 text-lg">Nos reunimos (o me envías un video) mostrando la tarea manual exacta que tu equipo hace. Evalúo la viabilidad técnica y te digo exactamente cuánto tiempo te puedo ahorrar.</p>
+                        <h3 class="text-2xl font-bold text-brand-900 mb-2">Auditoría del Proceso Técnico</h3>
+                        <p class="text-slate-600 text-lg">Nos reunimos (o me envías un video) mostrando la tarea manual exacta que tu equipo hace. Evalúo la viabilidad técnica y te digo exactamente cuánto tiempo y dinero te puedo ahorrar.</p>
                     </div>
                     
                     <div class="relative pl-8 md:pl-12 reveal">
                         <div class="absolute -left-[22px] top-1 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold shadow-lg shadow-brand-500/30">2</div>
-                        <h3 class="text-2xl font-bold text-brand-900 mb-2">Desarrollo del Script</h3>
-                        <p class="text-slate-600 text-lg">Escribo el código (Python, Node, o integraciones API) a la medida de tu infraestructura actual. No te obligo a cambiar de software, adapto mi código a lo que ya usas (Excel, SAP, Salesforce, etc.).</p>
+                        <h3 class="text-2xl font-bold text-brand-900 mb-2">Desarrollo del Código (Python / Node / APIs)</h3>
+                        <p class="text-slate-600 text-lg">Escribo el script a la medida de tu infraestructura actual. No te obligo a cambiar de software, adapto mi código a lo que ya usas (Excel, SAP, Salesforce, etc.).</p>
                     </div>
 
                     <div class="relative pl-8 md:pl-12 reveal">
                         <div class="absolute -left-[22px] top-1 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold shadow-lg shadow-brand-500/30">3</div>
-                        <h3 class="text-2xl font-bold text-brand-900 mb-2">Implementación y ROI</h3>
-                        <p class="text-slate-600 text-lg">Te entrego un ejecutable o configuro el servidor. Te capacito en 15 minutos. Lo que antes tomaba días, ahora requerirá un solo clic.</p>
+                        <h3 class="text-2xl font-bold text-brand-900 mb-2">Implementación en Servidores y Capacitación</h3>
+                        <p class="text-slate-600 text-lg">Te entrego un ejecutable o configuro el script en un servidor en la nube. Te capacito en 15 minutos. Lo que antes tomaba días, ahora requerirá un solo clic.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ==========================================
-             FINAL CTA
-        =========================================== -->
+        <!-- PREGUNTAS FRECUENTES (FAQ) SECTION - OPTIMIZACIÓN E-E-A-T PARA IA -->
+        <section id="preguntas-frecuentes" class="py-24 px-6 bg-slate-50 border-t border-slate-200">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-4xl font-extrabold text-brand-900 mb-4">Preguntas Frecuentes sobre Automatización</h2>
+                    <p class="text-lg text-slate-600">Resolvemos tus dudas técnicas sobre nuestra metodología y uso de IA.</p>
+                </div>
+
+                <div class="space-y-4 reveal">
+                    <!-- Pregunta 1: Autoridad (E-E-A-T) -->
+                    <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer bg-white hover:bg-slate-50 transition-colors">
+                            <h3 class="font-bold text-brand-900 text-lg">¿Quién está detrás de LycodeLife?</h3>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <div class="p-6 pt-0 text-slate-600 bg-white border-t border-slate-100 mt-2">
+                            LycodeLife está liderado por <strong>Shordy Simbaña</strong>, estudiante de Ingeniería en Sistemas especializado en resolver problemas empresariales con código. Mi objetivo es que tu equipo deje de hacer trabajo repetitivo y se enfoque en aportar valor real mientras los scripts trabajan de fondo.
+                        </div>
+                    </details>
+
+                    <!-- Pregunta 2: Servicios -->
+                    <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer bg-white hover:bg-slate-50 transition-colors">
+                            <h3 class="font-bold text-brand-900 text-lg">¿Qué tipo de procesos se pueden automatizar?</h3>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <div class="p-6 pt-0 text-slate-600 bg-white border-t border-slate-100 mt-2">
+                            Casi cualquier tarea repetitiva digital. Los casos más comunes incluyen: extracción masiva de datos web (Scraping), lectura inteligente de PDFs (OCR), envío de notificaciones masivas por WhatsApp, y sincronización entre softwares que no se comunican nativamente (ej. conectar tu e-commerce con tu ERP).
+                        </div>
+                    </details>
+
+                    <!-- Pregunta 3: Implementación IA -->
+                    <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer bg-white hover:bg-slate-50 transition-colors">
+                            <h3 class="font-bold text-brand-900 text-lg">¿Cómo se implementa la Inteligencia Artificial (IA) en mi empresa?</h3>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <div class="p-6 pt-0 text-slate-600 bg-white border-t border-slate-100 mt-2">
+                            Integramos IA directamente en tus procesos diarios mediante código (usando APIs como OpenAI). Esto permite que tus automatizaciones "entiendan" el contexto: desde analizar si un correo entrante es urgente, hasta extraer datos desordenados de una factura y organizarlos perfectamente en un Excel sin supervisión humana.
+                        </div>
+                    </details>
+
+                    <!-- Pregunta 4: Seguridad -->
+                    <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer bg-white hover:bg-slate-50 transition-colors">
+                            <h3 class="font-bold text-brand-900 text-lg">¿Es seguro automatizar procesos con datos confidenciales de mi empresa?</h3>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <div class="p-6 pt-0 text-slate-600 bg-white border-t border-slate-100 mt-2">
+                            Absolutamente. Como ingeniero, la seguridad de la información es mi prioridad. Los scripts que desarrollo se configuran para ejecutarse en tu propia infraestructura (ya sean tus servidores locales o tu nube privada). Yo no almaceno, retengo ni comparto la información comercial ni las bases de datos de tus clientes.
+                        </div>
+                    </details>
+
+                    <!-- Pregunta 5: Tiempos / Costos -->
+                    <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer bg-white hover:bg-slate-50 transition-colors">
+                            <h3 class="font-bold text-brand-900 text-lg">¿Cuánto tiempo toma desarrollar una automatización a medida?</h3>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <div class="p-6 pt-0 text-slate-600 bg-white border-t border-slate-100 mt-2">
+                            Depende de la complejidad técnica y las integraciones requeridas, pero un desarrollo promedio (como un bot de WhatsApp o un extractor de datos) toma entre <strong>2 y 4 semanas</strong> desde la auditoría hasta el despliegue final. Lo mejor es que el Retorno de Inversión (ROI) se percibe de inmediato al eliminar las horas de trabajo manual desde el primer día.
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <!-- FINAL CTA SECTION -->
         <section class="py-24 px-6 bg-brand-900 text-center">
             <div class="max-w-3xl mx-auto reveal">
-                <h2 class="text-4xl font-extrabold text-white mb-6">¿Listo para dejar de hacer trabajo de robots?</h2>
-                <p class="text-slate-300 text-xl mb-10">Cuéntame tu peor cuello de botella. Si no puedo automatizarlo, te lo diré de inmediato. Si puedo, prepararé una cotización para tu negocio.</p>
+                <!-- OPTIMIZACIÓN SEO: H2 Final de conversión -->
+                <h2 class="text-4xl font-extrabold text-white mb-6">Cotiza tu Proyecto de Automatización a Medida</h2>
+                <p class="text-slate-300 text-xl mb-10">Cuéntame tu peor cuello de botella. Si no puedo automatizarlo, te lo diré de inmediato. Si puedo, prepararé una propuesta técnica para tu negocio.</p>
                 <button onclick="toggleContactModal()" class="px-10 py-5 btn-primary text-white rounded-xl font-bold text-xl transition-all w-full md:w-auto shadow-[0_0_30px_rgba(37,99,235,0.4)]">
-                    Solicitar Cotización Técnica
+                    Solicitar Consultoría Técnica
                 </button>
             </div>
         </section>
@@ -375,12 +561,12 @@
             <div class="flex items-center space-x-2 mb-4 md:mb-0">
                 <div class="bg-slate-800 text-white w-8 h-8 rounded flex items-center justify-center font-bold">L</div>
                 <span class="font-bold text-white text-lg">LycodeLife</span>
-                <span class="text-sm ml-4 border-l border-slate-700 pl-4">B2B Automation Engineering</span>
+                <span class="text-sm ml-4 border-l border-slate-700 pl-4">Por Shordy Simbaña • B2B Automation Engineering</span>
             </div>
             <div class="flex space-x-6">
-                <a href="https://www.tiktok.com/@lycodelife" target="_blank" class="hover:text-white font-medium transition-colors">TikTok</a>
-                <a href="https://www.instagram.com/lycodelife" target="_blank" class="hover:text-white font-medium transition-colors">Instagram</a>
-                <a href="https://www.linkedin.com/in/tu-perfil" target="_blank" class="hover:text-white font-medium transition-colors">LinkedIn</a>
+                <a href="https://www.tiktok.com/@lycodelife" target="_blank" rel="noopener noreferrer" class="hover:text-white font-medium transition-colors">TikTok</a>
+                <a href="https://www.instagram.com/lycodelife" target="_blank" rel="noopener noreferrer" class="hover:text-white font-medium transition-colors">Instagram</a>
+                <a href="https://www.linkedin.com/in/tu-perfil" target="_blank" rel="noopener noreferrer" class="hover:text-white font-medium transition-colors">LinkedIn</a>
             </div>
         </div>
     </footer>
@@ -395,7 +581,7 @@
             </button>
             
             <div class="mb-8">
-                <h3 class="text-2xl font-extrabold text-brand-900 mb-2">Describeme tu cuello de botella</h3>
+                <h3 class="text-2xl font-extrabold text-brand-900 mb-2">Descríbeme tu cuello de botella</h3>
                 <p class="text-slate-500 text-sm">Completa esto rápido y te diré si es técnica y financieramente viable automatizarlo.</p>
             </div>
             
@@ -443,15 +629,14 @@
             mobileMenu.classList.toggle('hidden');
         }
 
-        // Modal Logic con animaciones suaves
+        // Modal Logic
         function toggleContactModal() {
             const modal = document.getElementById('contact-modal');
             const content = document.getElementById('contact-modal-content');
             
             if (modal.classList.contains('hidden')) {
                 modal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden'; // Evitar scroll de fondo
-                // Pequeño delay para la animación
+                document.body.style.overflow = 'hidden'; 
                 setTimeout(() => {
                     content.classList.remove('scale-95', 'opacity-0');
                     content.classList.add('scale-100', 'opacity-100');
@@ -461,12 +646,12 @@
                 content.classList.add('scale-95', 'opacity-0');
                 setTimeout(() => {
                     modal.classList.add('hidden');
-                    document.body.style.overflow = 'auto'; // Restaurar scroll
+                    document.body.style.overflow = 'auto'; 
                 }, 300);
             }
         }
 
-        // Intersection Observer para las animaciones Reveal
+        // Intersection Observer
         document.addEventListener('DOMContentLoaded', () => {
             const reveals = document.querySelectorAll('.reveal');
             const observer = new IntersectionObserver((entries) => {
