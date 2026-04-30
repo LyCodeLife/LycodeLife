@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- SEO OPTIMIZATION: English Title and Meta Description with Core Keywords -->
+    <title>B2B Process Automation & Custom Python Scripts | LycodeLife</title>
+    <meta name="description" content="Custom script development and process automation for B2B companies. Save time with web scraping, API integrations, and RPA. Founded by Shordy Simbaña.">
+    
+    <!-- SEO OPTIMIZATION: Hreflang Tags (Identical to Spanish version to link them) -->
+    <link rel="canonical" href="https://lycodelife.com/en/" />
+    <link rel="alternate" hreflang="es" href="https://lycodelife.com/" />
+    <link rel="alternate" hreflang="es-EC" href="https://lycodelife.com/" />
+    <link rel="alternate" hreflang="en" href="https://lycodelife.com/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://lycodelife.com/" />
+
+    <!-- SEO OPTIMIZATION: Schema.org JSON-LD (Translated and highlighting the Founder) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "ProfessionalService",
+          "name": "LycodeLife",
+          "founder": {
+            "@type": "Person",
+            "name": "Shordy Simbaña",
+            "jobTitle": "Founder & Systems Engineer"
+          },
+          "description": "B2B engineering services for process automation, custom Python scripts, data extraction, and API integrations.",
+          "areaServed": "Global",
+          "offers": {
+            "@type": "Offer",
+            "description": "Custom automation consulting and development."
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Who is behind LycodeLife?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "LycodeLife was founded and is led by Shordy Simbaña, a Systems Engineer specializing in B2B process automation and Python scripting."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What type of business processes can be automated?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "We automate digital repetitive tasks like web scraping, intelligent PDF reading (OCR), bulk WhatsApp notifications, and syncing incompatible software (e.g., ERP to CRM)."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How is Artificial Intelligence (AI) implemented in my processes?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "We integrate AI models via APIs so your automations understand context, such as reading unstructured documents or automatically classifying incoming emails."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is it safe to automate processes with my company's confidential data?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Absolutely. Scripts are developed with high security standards and run on your own infrastructure (local servers or private cloud). We do not retain or share your data."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How long does it take to develop a custom automation?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Depending on the complexity, most developments take between 2 and 4 weeks. Return on Investment (ROI) is noticed from day 1 by reducing manual hours to zero."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#0a192f',
+                            dark: '#0f172a',
+                            text: '#475569',
+                            light: '#f8fafc',
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                        'glow': '0 0 20px rgba(37, 99, 235, 0.5)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        
+        body {
+            background-color: #f8fafc;
+            color: #0f172a;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .glass-nav.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            border-bottom: 1px solid #e2e8f0;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #2563eb 0%, #1e3a8a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2), 0 2px 4px -1px rgba(37, 99, 235, 0.1);
+        }
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3), 0 4px 6px -2px rgba(37, 99, 235, 0.15);
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f8fafc; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-600 selection:text-white flex flex-col min-h-screen">
+
+    <!-- NAVIGATION -->
+    <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-nav" id="main-nav">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            
+            <!-- LOGO -->
+            <a href="#home" class="flex items-center outline-none">
+                <img src="../assets/favicon.png" alt="LycodeLife Logo - B2B Automation Services" class="h-8 w-auto hover:opacity-90 transition-opacity">
+            </a>
+
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#rpa-services" class="text-sm font-semibold text-brand-text hover:text-brand-600 transition-colors">RPA Services</a>
+                <a href="#portfolio" class="text-sm font-semibold text-brand-text hover:text-brand-600 transition-colors">Success Stories</a>
+                <a href="#how-it-works" class="text-sm font-semibold text-brand-text hover:text-brand-600 transition-colors">How I Work</a>
+                
+                <a href="../lyra-lazuli-life.html" class="px-5 py-2.5 bg-brand-50 text-brand-600 border border-brand-200 hover:bg-brand-100 rounded-lg font-bold text-sm transition-colors">Lyra Lazuli</a>
+                
+                <!-- Language Selector -->
+                <div class="relative group">
+                    <button class="flex items-center gap-1 text-sm font-semibold text-brand-text hover:text-brand-600 transition-colors py-2">
+                        <i data-lucide="globe" class="w-4 h-4"></i> EN <i data-lucide="chevron-down" class="w-3 h-3"></i>
+                    </button>
+                    <div class="absolute right-0 top-full w-24 bg-white border border-slate-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden">
+                        <a href="/en/" class="block px-4 py-2 text-sm text-brand-900 bg-slate-50 font-bold border-b border-slate-100">🇺🇸 EN</a>
+                        <a href="/" class="block px-4 py-2 text-sm text-slate-500 hover:bg-slate-50 hover:text-brand-600 transition-colors">🇪🇸 ES</a>
+                    </div>
+                </div>
+                
+                <button onclick="toggleContactModal()" class="px-5 py-2.5 btn-primary rounded-lg font-bold text-sm">Get a Quote</button>
+            </div>
+
+            <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="md:hidden text-brand-dark p-2">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden absolute top-20 left-0 w-full bg-white border-b border-slate-200 py-4 px-6 flex flex-col space-y-4 shadow-xl">
+            <a href="#rpa-services" onclick="toggleMobileMenu()" class="text-left font-semibold text-brand-text">RPA Services</a>
+            <a href="#portfolio" onclick="toggleMobileMenu()" class="text-left font-semibold text-brand-text">Success Stories</a>
+            <a href="#how-it-works" onclick="toggleMobileMenu()" class="text-left font-semibold text-brand-text">How I Work</a>
+            
+            <a href="../lyra-lazuli-life.html" class="w-full text-center px-5 py-3 bg-brand-50 text-brand-600 border border-brand-200 rounded-lg font-bold mt-2 transition-colors">Lyra Lazuli Life</a>
+            
+            <!-- Language Selector (Mobile) -->
+            <div class="flex justify-center gap-4 py-3 mt-2 border-t border-slate-100">
+                <a href="/en/" class="flex items-center gap-1 text-sm font-bold text-brand-600"><i data-lucide="globe" class="w-4 h-4"></i> EN</a>
+                <span class="text-slate-200">|</span>
+                <a href="/" class="flex items-center gap-1 text-sm font-semibold text-slate-500 hover:text-brand-600"><i data-lucide="globe" class="w-4 h-4"></i> ES</a>
+            </div>
+            
+            <button onclick="toggleContactModal(); toggleMobileMenu()" class="w-full text-center px-5 py-3 btn-primary rounded-lg font-bold mt-2">Get a Quote</button>
+        </div>
+    </nav>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/message/TU_NUMERO_AQUI" target="_blank" class="fixed bottom-6 right-6 z-[100] bg-[#25D366] rounded-full p-4 flex items-center justify-center text-white shadow-xl hover:scale-105 transition-all group" rel="noopener noreferrer">
+        <i data-lucide="message-circle" class="w-6 h-6"></i>
+        <span class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 ease-in-out font-semibold text-sm pl-0 group-hover:pl-2">Chat with me</span>
+    </a>
+
+    <!-- MAIN -->
+    <main class="flex-grow relative pt-20">
+
+        <!-- HERO SECTION -->
+        <section id="home" class="py-20 md:py-32 px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="inline-block bg-blue-50 text-brand-600 font-bold px-4 py-1.5 rounded-full text-sm mb-6 reveal">
+                    For Operations, Sales, and Finance Teams
+                </div>
+                
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-brand-900 leading-[1.1] mb-4 reveal tracking-tight" style="transition-delay: 100ms;">
+                    B2B Process <span class="text-gradient">Automation Services.</span>
+                </h1>
+                
+                <p class="text-2xl font-bold text-slate-700 mb-6 reveal" style="transition-delay: 150ms;">
+                    Stop losing money on manual tasks.
+                </p>
+                
+                <p class="text-xl text-slate-600 mb-10 reveal max-w-2xl mx-auto leading-relaxed" style="transition-delay: 200ms;">
+                    If your team spends more than 2 hours a day copying data, cleaning Excel sheets, or sending repetitive messages, you are losing thousands of dollars a year. I develop custom scripts that do that work in seconds.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row justify-center gap-4 reveal" style="transition-delay: 300ms;">
+                    <button onclick="toggleContactModal()" class="px-8 py-4 btn-primary rounded-xl font-bold text-lg flex items-center justify-center gap-2">
+                        Quote My Project <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </button>
+                    <a href="#portfolio" class="px-8 py-4 bg-white text-brand-900 border-2 border-slate-200 hover:border-brand-600 rounded-xl font-bold transition-all text-lg flex items-center justify-center">
+                        See How It Works
+                    </a>
+                </div>
+
+                <!-- Trust Indicators -->
+                <div class="mt-16 pt-8 border-t border-slate-200 reveal" style="transition-delay: 400ms;">
+                    <p class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-6">Typical Results for My Clients</p>
+                    <div class="flex flex-wrap justify-center gap-8 md:gap-16 text-center">
+                        <div>
+                            <div class="text-3xl font-extrabold text-brand-900">95%</div>
+                            <div class="text-sm text-slate-500 font-medium">Time Saved</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-extrabold text-brand-900">0</div>
+                            <div class="text-sm text-slate-500 font-medium">Human Errors</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-extrabold text-brand-900">24/7</div>
+                            <div class="text-sm text-slate-500 font-medium">Continuous Operation</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROBLEM / RPA SERVICES SECTION -->
+        <section id="rpa-services" class="py-24 px-6 bg-brand-900 text-white relative overflow-hidden">
+            <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-brand-600 rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
+            
+            <div class="max-w-6xl mx-auto relative z-10">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-3xl md:text-4xl font-extrabold mb-4">Robotic Process Automation (RPA) for Bottlenecks</h2>
+                    <p class="text-slate-400 text-lg max-w-2xl mx-auto">Human talent is expensive. Why use it to act like a robot? I automate the manual processes that are holding back your company's growth.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-slate-800/50 border border-slate-700 p-8 rounded-2xl reveal hover:bg-slate-800 transition-colors">
+                        <div class="w-14 h-14 bg-brand-600/20 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="file-spreadsheet" class="w-7 h-7 text-brand-400"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Automated Data Extraction (Web Scraping)</h3>
+                        <p class="text-slate-400">I extract data from hundreds of PDFs, websites, or emails simultaneously and inject them directly into your CRM or database. Zero typos.</p>
+                    </div>
+                    <div class="bg-slate-800/50 border border-slate-700 p-8 rounded-2xl reveal hover:bg-slate-800 transition-colors" style="transition-delay: 100ms;">
+                        <div class="w-14 h-14 bg-brand-600/20 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="message-square" class="w-7 h-7 text-brand-400"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">WhatsApp Bots & Bulk Notifications</h3>
+                        <p class="text-slate-400">Systems that send 100% personalized WhatsApp messages or emails to your customer base (collections, reports, alerts) without manual intervention.</p>
+                    </div>
+                    <div class="bg-slate-800/50 border border-slate-700 p-8 rounded-2xl reveal hover:bg-slate-800 transition-colors" style="transition-delay: 200ms;">
+                        <div class="w-14 h-14 bg-brand-600/20 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="code-2" class="w-7 h-7 text-brand-400"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Custom Software Integrations (APIs)</h3>
+                        <p class="text-slate-400">I make your software talk to each other. If your ERP doesn't connect natively to your e-commerce platform, I build the invisible API bridge that links them.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PORTFOLIO SECTION -->
+        <section id="portfolio" class="py-24 px-6 bg-slate-50 border-b border-slate-200">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-20 reveal">
+                    <h2 class="text-4xl font-extrabold text-brand-900 mb-4">Custom Automation & Scripting Portfolio</h2>
+                    <p class="text-lg text-slate-600">Real solutions. Real results. Native tools created for specific processes that completely eliminated manual labor.</p>
+                </div>
+
+                <div class="space-y-32">
+                    <!-- PROJECT 1 -->
+                    <div class="grid lg:grid-cols-2 gap-12 items-center reveal">
+                        <div class="order-1">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold mb-4">
+                                <span class="w-2 h-2 rounded-full bg-green-500"></span> Operations / Sales
+                            </div>
+                            <h3 class="text-3xl font-bold text-brand-900 mb-4">Enterprise WhatsApp Sequencer Software</h3>
+                            <p class="text-slate-600 mb-6 text-lg">
+                                Designed for collections and sales teams. Allows sending sequences of text, images, and PDF documents to massive databases with dynamic personalization.
+                            </p>
+                            <div class="bg-white p-6 rounded-xl border border-slate-200 mb-6 shadow-sm">
+                                <h4 class="font-bold text-brand-900 mb-2">Return on Investment (ROI):</h4>
+                                <ul class="space-y-2 text-slate-700">
+                                    <li class="flex items-start gap-2"><i data-lucide="trending-down" class="w-5 h-5 text-green-600 shrink-0 mt-0.5"></i> Sending time reduced from 4 hours to 5 minutes.</li>
+                                    <li class="flex items-start gap-2"><i data-lucide="shield" class="w-5 h-5 text-brand-600 shrink-0 mt-0.5"></i> Humanized pauses and mitigation algorithms to drastically reduce the risk of being blocked by Meta.</li>
+                                </ul>
+                            </div>
+                            
+                            <a href="../services/bulk-whatsapp-bot.html" class="inline-flex items-center gap-2 text-brand-600 font-bold hover:text-brand-700 transition-colors mt-2">
+                                View WhatsApp Bot technical features <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                        <div class="order-2 flex justify-center w-full relative group">
+                            <div class="absolute inset-0 bg-green-600 rounded-2xl transform rotate-2 opacity-10 group-hover:rotate-3 transition-transform duration-300"></div>
+                            <img src="../assets/whatsapp-bot.png" alt="Development of Enterprise WhatsApp Bot and Sequencer Software" class="relative w-full h-auto max-h-[450px] object-contain rounded-xl shadow-2xl border border-slate-200 bg-white p-2 z-10 transition-transform duration-300 group-hover:-translate-y-1">
+                        </div>
+                    </div>
+
+                    <!-- PROJECT 2 -->
+                    <div class="grid lg:grid-cols-2 gap-12 items-center reveal">
+                        <div class="order-2 lg:order-1 flex justify-center w-full relative group">
+                            <div class="absolute inset-0 bg-blue-600 rounded-2xl transform -rotate-2 opacity-10 group-hover:-rotate-3 transition-transform duration-300"></div>
+                            <img src="../assets/excel-cleaner.png" alt="Python Script for Automated Excel Database and ERP Cleaning" class="relative w-full h-auto max-h-[450px] object-contain rounded-xl shadow-2xl border border-slate-200 bg-white p-2 z-10 transition-transform duration-300 group-hover:-translate-y-1">
+                        </div>
+                        <div class="order-1 lg:order-2">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold mb-4">
+                                <span class="w-2 h-2 rounded-full bg-blue-500"></span> Inventory & Finance
+                            </div>
+                            <h3 class="text-3xl font-bold text-brand-900 mb-4">Python Script for Data Sanitization & Excel</h3>
+                            <p class="text-slate-600 mb-6 text-lg">
+                                Suppliers send price lists in disastrous formats. This script automatically structures, cleans, cross-references data, and calculates margins to feed ERP systems.
+                            </p>
+                            <div class="bg-white p-6 rounded-xl border border-slate-200 mb-6 shadow-sm">
+                                <h4 class="font-bold text-brand-900 mb-2">Return on Investment (ROI):</h4>
+                                <ul class="space-y-2 text-slate-700">
+                                    <li class="flex items-start gap-2"><i data-lucide="zap" class="w-5 h-5 text-yellow-500 shrink-0 mt-0.5"></i> Processing of 10,000 SKUs in 3 seconds.</li>
+                                    <li class="flex items-start gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-brand-600 shrink-0 mt-0.5"></i> Complete elimination of pricing errors.</li>
+                                </ul>
+                            </div>
+
+                            <a href="../services/python-data-cleaning.html" class="inline-flex items-center gap-2 text-brand-600 font-bold hover:text-brand-700 transition-colors mt-2">
+                                View PriceClean Case Study (Python Script) <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- PROJECT 3 -->
+                    <div class="grid lg:grid-cols-2 gap-12 items-center reveal">
+                        <div class="order-1">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-bold mb-4">
+                                <span class="w-2 h-2 rounded-full bg-purple-500"></span> Accounting
+                            </div>
+                            <h3 class="text-3xl font-bold text-brand-900 mb-4">Invoice OCR & Intelligent PDF Processing</h3>
+                            <p class="text-slate-600 mb-6 text-lg">
+                                Massive PDF document reading. The script scans entire folders of invoices, extracts the Tax ID, company name, date, and totals, and exports a clean database for the accounting team.
+                            </p>
+                            <div class="bg-white p-6 rounded-xl border border-slate-200 mb-6 shadow-sm">
+                                <h4 class="font-bold text-brand-900 mb-2">Return on Investment (ROI):</h4>
+                                <ul class="space-y-2 text-slate-700">
+                                    <li class="flex items-start gap-2"><i data-lucide="clock" class="w-5 h-5 text-brand-600 shrink-0 mt-0.5"></i> +20 hours saved per week for the accounting team.</li>
+                                    <li class="flex items-start gap-2"><i data-lucide="folder-check" class="w-5 h-5 text-brand-600 shrink-0 mt-0.5"></i> 100% standardization of internal audits.</li>
+                                </ul>
+                            </div>
+
+                            <a href="../services/ocr-invoice-extraction.html" class="inline-flex items-center gap-2 text-brand-600 font-bold hover:text-brand-700 transition-colors mt-2">
+                                Discover how OCR technology works <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                        <div class="order-2 flex justify-center w-full relative group">
+                            <div class="absolute inset-0 bg-purple-600 rounded-2xl transform rotate-2 opacity-10 group-hover:rotate-3 transition-transform duration-300"></div>
+                            <img src="../assets/facturas-ocr.png" alt="Automated OCR system for extracting data from PDF invoices" class="relative w-full h-auto max-h-[450px] object-contain rounded-xl shadow-2xl border border-slate-200 bg-white p-2 z-10 transition-transform duration-300 group-hover:-translate-y-1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOW I WORK SECTION -->
+        <section id="how-it-works" class="py-24 px-6 bg-white">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-4xl font-extrabold text-brand-900 mb-6">B2B Automation Consulting & Development</h2>
+                    <p class="text-xl text-slate-600">Direct communication. Zero bureaucracy. By working with me, you don't talk to account executives who don't know code. You speak directly with the Software Engineer who will solve your problem.</p>
+                </div>
+
+                <div class="relative border-l-4 border-slate-200 ml-4 md:ml-8 space-y-12 pb-8">
+                    <div class="relative pl-8 md:pl-12 reveal">
+                        <div class="absolute -left-[22px] top-1 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold shadow-lg shadow-brand-500/30">1</div>
+                        <h3 class="text-2xl font-bold text-brand-900 mb-2">Technical Process Audit</h3>
+                        <p class="text-slate-600 text-lg">We meet (or you send me a video) showing the exact manual task your team performs. I evaluate the technical feasibility and tell you exactly how much time and money I can save you.</p>
+                    </div>
+                    
+                    <div class="relative pl-8 md:pl-12 reveal">
+                        <div class="absolute -left-[22px] top-1 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold shadow-lg shadow-brand-500/30">2</div>
+                        <h3 class="text-2xl font-bold text-brand-900 mb-2">Code Development (Python / Node / APIs)</h3>
+                        <p class="text-slate-600 text-lg">I write the script tailored to your current infrastructure. I don't force you to switch software; I adapt my code to what you already use (Excel, SAP, Salesforce, etc.).</p>
+                    </div>
+
+                    <div class="relative pl-8 md:pl-12 reveal">
+                        <div class="absolute -left-[22px] top-1 w-10 h-10 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold shadow-lg shadow-brand-500/30">3</div>
+                        <h3 class="text-2xl font-bold text-brand-900 mb-2">Server Implementation & Training</h3>
+                        <p class="text-slate-600 text-lg">I deliver an executable or set up the script on a cloud server. I provide a 15-minute training. What used to take days will now require a single click.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ SECTION -->
+        <section id="faq" class="py-24 px-6 bg-slate-50 border-t border-slate-200">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-4xl font-extrabold text-brand-900 mb-4">Frequently Asked Questions about Automation</h2>
+                    <p class="text-lg text-slate-600">Resolving your technical doubts regarding our methodology and AI integration.</p>
+                </div>
+
+                <div class="space-y-4 reveal">
+                    <!-- FAQ 1: Founder Authority (E-E-A-T) -->
+                    <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer bg-white hover:bg-slate-50 transition-colors">
+                            <h3 class="font-bold text-brand-900 text-lg">Who is behind LycodeLife?</h3>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <div class="p-6 pt-0 text-slate-600 bg-white border-t border-slate-100 mt-2">
+                            LycodeLife was founded and is led by <strong>Shordy Simbaña</strong>, a Systems Engineer specializing in solving business bottlenecks with code. My goal is for your team to stop doing repetitive work and focus on adding real value while background scripts handle the rest.
+                        </div>
+                    </details>
+
+                    <!-- FAQ 2 -->
+                    <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer bg-white hover:bg-slate-50 transition-colors">
+                            <h3 class="font-bold text-brand-900 text-lg">What type of business processes can be automated?</h3>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <div class="p-6 pt-0 text-slate-600 bg-white border-t border-slate-100 mt-2">
+                            Almost any digital repetitive task. Common cases include: bulk web data extraction (Scraping), intelligent PDF reading (OCR), sending bulk notifications via WhatsApp, and synchronizing software that doesn't communicate natively (e.g., connecting your e-commerce to your ERP).
+                        </div>
+                    </details>
+
+                    <!-- FAQ 3 -->
+                    <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer bg-white hover:bg-slate-50 transition-colors">
+                            <h3 class="font-bold text-brand-900 text-lg">How is Artificial Intelligence (AI) implemented in my company?</h3>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <div class="p-6 pt-0 text-slate-600 bg-white border-t border-slate-100 mt-2">
+                            We integrate AI directly into your daily processes through code (using APIs like OpenAI). This allows your automations to "understand" context: from analyzing whether an incoming email is urgent, to extracting messy data from an invoice and organizing it perfectly into an Excel file without human supervision.
+                        </div>
+                    </details>
+
+                    <!-- FAQ 4 -->
+                    <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer bg-white hover:bg-slate-50 transition-colors">
+                            <h3 class="font-bold text-brand-900 text-lg">Is it safe to automate processes using my company's confidential data?</h3>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <div class="p-6 pt-0 text-slate-600 bg-white border-t border-slate-100 mt-2">
+                            Absolutely. As an engineer, information security is my top priority. The scripts I develop are configured to run on your own infrastructure (whether local servers or your private cloud). I do not store, retain, or share commercial information or your customer databases.
+                        </div>
+                    </details>
+
+                    <!-- FAQ 5 -->
+                    <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer bg-white hover:bg-slate-50 transition-colors">
+                            <h3 class="font-bold text-brand-900 text-lg">How long does it take to develop a custom automation?</h3>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <div class="p-6 pt-0 text-slate-600 bg-white border-t border-slate-100 mt-2">
+                            It depends on technical complexity and required integrations, but an average development (like a WhatsApp bot or data extractor) takes between <strong>2 and 4 weeks</strong> from audit to final deployment. The best part is that the Return on Investment (ROI) is perceived immediately by eliminating manual work hours from day one.
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <!-- FINAL CTA SECTION -->
+        <section class="py-24 px-6 bg-brand-900 text-center">
+            <div class="max-w-3xl mx-auto reveal">
+                <h2 class="text-4xl font-extrabold text-white mb-6">Quote your Custom Automation Project</h2>
+                <p class="text-slate-300 text-xl mb-10">Tell me about your worst bottleneck. If I can't automate it, I will tell you immediately. If I can, I'll prepare a technical proposal for your business.</p>
+                <button onclick="toggleContactModal()" class="px-10 py-5 btn-primary text-white rounded-xl font-bold text-xl transition-all w-full md:w-auto shadow-[0_0_30px_rgba(37,99,235,0.4)]">
+                    Request Technical Consulting
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 border-t border-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-slate-400">
+            <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                <div class="bg-slate-800 text-white w-8 h-8 rounded flex items-center justify-center font-bold">L</div>
+                <span class="font-bold text-white text-lg">LycodeLife</span>
+                <span class="text-sm ml-4 border-l border-slate-700 pl-4">Founded by Shordy Simbaña • B2B Automation Engineering</span>
+            </div>
+            <div class="flex space-x-6">
+                <a href="https://www.tiktok.com/@lycodelife" target="_blank" rel="noopener noreferrer" class="hover:text-white font-medium transition-colors">TikTok</a>
+                <a href="https://www.instagram.com/lycodelife" target="_blank" rel="noopener noreferrer" class="hover:text-white font-medium transition-colors">Instagram</a>
+                <a href="https://www.linkedin.com/in/tu-perfil" target="_blank" rel="noopener noreferrer" class="hover:text-white font-medium transition-colors">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- B2B CONTACT MODAL -->
+    <div id="contact-modal" class="fixed inset-0 z-[110] hidden flex items-center justify-center px-4">
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="toggleContactModal()"></div>
+        
+        <div class="bg-white w-full max-w-lg p-8 md:p-10 rounded-2xl relative z-10 transform transition-all duration-300 scale-95 opacity-0 shadow-2xl" id="contact-modal-content">
+            <button onclick="toggleContactModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 rounded-full p-2 transition-colors">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            
+            <div class="mb-8">
+                <h3 class="text-2xl font-extrabold text-brand-900 mb-2">Describe your bottleneck</h3>
+                <p class="text-slate-500 text-sm">Fill this out quickly and I will tell you if it's technically and financially viable to automate.</p>
+            </div>
+            
+            <form action="https://formsubmit.co/lycodelifework@gmail.com" method="POST" class="space-y-5">
+                <input type="hidden" name="_subject" value="🚀 NEW B2B LEAD - LycodeLife (EN)">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_captcha" value="false">
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5 tracking-wide">Your Name</label>
+                        <input type="text" name="name" required class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 text-brand-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5 tracking-wide">Company</label>
+                        <input type="text" name="company" required class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 text-brand-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all text-sm">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5 tracking-wide">Corporate Email</label>
+                    <input type="email" name="email" required class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 text-brand-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all text-sm">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5 tracking-wide">What manual process do you want to eliminate?</label>
+                    <textarea name="message" required rows="4" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-3 text-brand-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all text-sm resize-none" placeholder="Ex: My team spends 3 hours a day copying data from PDFs into a master Excel file..."></textarea>
+                </div>
+                
+                <button type="submit" class="w-full py-4 btn-primary rounded-lg font-bold transition-all text-lg mt-4 flex justify-center items-center gap-2">
+                    Submit for Evaluation <i data-lucide="send" class="w-4 h-4"></i>
+                </button>
+                <p class="text-xs text-center text-slate-400 mt-3"><i data-lucide="lock" class="w-3 h-3 inline pb-0.5"></i> Your data is secure. 100% confidential.</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- LOGIC -->
+    <script>
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const mobileMenu = document.getElementById('mobile-menu');
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        // Modal Logic
+        function toggleContactModal() {
+            const modal = document.getElementById('contact-modal');
+            const content = document.getElementById('contact-modal-content');
+            
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; 
+                setTimeout(() => {
+                    content.classList.remove('scale-95', 'opacity-0');
+                    content.classList.add('scale-100', 'opacity-100');
+                }, 10);
+            } else {
+                content.classList.remove('scale-100', 'opacity-100');
+                content.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    document.body.style.overflow = 'auto'; 
+                }, 300);
+            }
+        }
+
+        // Intersection Observer
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+            reveals.forEach(el => observer.observe(el));
+        });
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('main-nav');
+            if(window.scrollY > 20) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+        
+    </script>
+</body>
+</html>
